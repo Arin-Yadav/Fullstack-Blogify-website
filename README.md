@@ -1,5 +1,12 @@
 # 📝 Blogify
 
+![React](https://img.shields.io/badge/React-19.1.1-61DAFB?logo=react)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.1.16-38B2AC?logo=tailwindcss)
+![Node.js](https://img.shields.io/badge/Node.js-22.17.1-339933?logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-8.2.0-47A248?logo=mongodb)
+![Mongoose](https://img.shields.io/badge/Mongoose-2.5.8-880000?logo=mongoose)
+
+
 A full-stack blogging platform where users can securely sign up, sigin, and manage their personal blog posts. Built with React.js, Node.js, ExpressJs, and MongoDB, Blogify showcases clean authentication, protected routes, and real-time CRUD operations—all wrapped in a user-friendly interface.
 
 ---
@@ -94,12 +101,6 @@ Start the frontend:
 npm run dev
 ```
 ---
-
-![React](https://img.shields.io/badge/React-19.1.1-blue?logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.1-blue?logo=tailwindcss)
-
 
 
 ## 🙌 Credits
