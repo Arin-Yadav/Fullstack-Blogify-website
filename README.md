@@ -102,8 +102,7 @@ npm run dev
 ```
 ---
 
-
 ## 🙌 Credits
 
-Built by [Arin Yadav](https://github.com/Arin-Yadav) as a full-stack showcase project.
-Follow Me on LinkedIN - https://www.linkedin.com/in/arinyadav/
+- Built by [Arin Yadav](https://github.com/Arin-Yadav) as a full-stack showcase project.
+- Follow Me on LinkedIN - https://www.linkedin.com/in/arinyadav/
