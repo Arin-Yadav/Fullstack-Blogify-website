@@ -3,18 +3,19 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const authRoutes = require("./routes/authRoutes")
-const blogRoutes = require("./routes/blogRoutes")
+const authRoutes = require("./routes/authRoutes");
+const blogRoutes = require("./routes/blogRoutes");
+const { checkForAuthentication } = require("./middlewares/authMiddleware");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use("/api/auth", authRoutes)
-app.use("/api/blogs", blogRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/blogs", checkForAuthentication, blogRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

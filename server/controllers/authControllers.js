@@ -27,8 +27,8 @@ async function handleSignIn(req, res) {
     if (!matchUser)
       return res.status(401).json({ error: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET); // how id
-    res.json({ token, user: { fullName: user.fullName, email: user.email } });
+    const token = jwt.sign({ id: user._id, fullName: user.fullName, email: user.email }, process.env.JWT_SECRET); // how id
+    res.json({ token }, 200);
   } catch (err) {
     res.json(500).json({ error: "Login error" });
   }

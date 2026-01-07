@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const EditBlogModal = ({ blog, onClose, onUpdated }) => {
@@ -10,7 +10,8 @@ const EditBlogModal = ({ blog, onClose, onUpdated }) => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.put(`${import.meta.env.VITE_API_URL}/blogs/${blog._id}`, {
+      // const res = await axios.put(`${import.meta.env.VITE_API_URL}/blogs/${blog._id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/blogs/${blog._id}`, {
         title,
         content,
       }, {
