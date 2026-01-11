@@ -24,7 +24,10 @@ const Signin = () => {
 
       navigate("/dashboard");
     } catch (error) {
-      console.error("Sign in failed: ", error.response?.data?.error || error.message);
+      console.error(
+        "Sign in failed: ",
+        error.response?.data?.error || error.message
+      );
     }
   };
 
@@ -86,7 +89,7 @@ const Signin = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors outline-none">
           Sign In
         </button>
 
