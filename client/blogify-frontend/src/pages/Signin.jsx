@@ -1,32 +1,30 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Signin = () => {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm();
-
-  const password = watch("password");
 
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/signup`,
+        `${import.meta.env.VITE_API_URL}/auth/signin`,
         data
       );
-      console.log("Server response: ", response);
-      navigate("/signin");
+      // console.log("Signed in: ", response.data) // shows what the backend response in this case a token
+
+      // save user info or token
+      localStorage.setItem("token", response.data.token);
+
+      navigate("/dashboard");
     } catch (error) {
-      console.error(
-        "Error submitting form: ",
-        error.response?.data || error.message
-      );
+      console.error("Sign in failed: ", error.response?.data?.error || error.message);
     }
   };
 
@@ -36,29 +34,8 @@ const Signup = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4">
         <h2 className="text-2xl font-bold text-center text-gray-800">
-          Create Account
+          Sign In
         </h2>
-
-        {/* Full Name */}
-        <div className="flex flex-col">
-          <label
-            htmlFor="fullName"
-            className="text-sm font-medium text-gray-700">
-            Full Name
-          </label>
-          <input
-            id="fullName"
-            type="text"
-            placeholder="Enter your full name"
-            className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            {...register("fullName", { required: "Full name is required" })}
-          />
-          {errors.fullName && (
-            <p className="text-xs text-red-500 mt-1">
-              {errors.fullName.message}
-            </p>
-          )}
-        </div>
 
         {/* Email */}
         <div className="flex flex-col">
@@ -97,12 +74,6 @@ const Signup = () => {
             className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("password", {
               required: "Password is required",
-              pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message:
-                  "Password must be at least 8 characters, include uppercase, lowercase, number, and special character",
-              },
             })}
           />
           {errors.password && (
@@ -112,43 +83,18 @@ const Signup = () => {
           )}
         </div>
 
-        {/* Confirm Password */}
-        <div className="flex flex-col">
-          <label
-            htmlFor="confirmPassword"
-            className="text-sm font-medium text-gray-700">
-            Confirm Password
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            placeholder="Re-enter your password"
-            className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Password do not match",
-            })}
-          />
-          {errors.confirmPassword && (
-            <p className="text-xs text-red-500 mt-1">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
-
         {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
-          Sign Up
+          Sign In
         </button>
 
         {/* Footer Link */}
         <p className="text-sm text-center text-gray-600 mt-4">
-          Already have an account?{" "}
-          <a href="/signin" className="text-blue-600 hover:underline">
-            Sign in
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-600 hover:underline">
+            Sign up
           </a>
         </p>
       </form>
@@ -156,4 +102,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;

@@ -1,39 +1,61 @@
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const Navbar = () => {
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
   return (
-    <div>
-      <nav className="px-4 py-3 flex justify-between items-center shadow-md w-full h-16">
-        <Link to="/" className="text-3xl text-blue-600 font-bold">
-          Blogify
-        </Link>
-        <div className="space-x-4">
-          <Link to="/">Home</Link>
-          <Link to="/dashboard">Dashboard</Link>
+    <nav className="sticky top-0 z-10 w-full bg-white px-4 sm:px-6 lg:px-8 py-4 shadow-sm flex justify-between items-center">
+      {/* Logo + Title */}
+      <div className="flex items-center gap-3 cursor-pointer">
+        <h1 className="text-2xl sm:text-3xl">✍️</h1>
+        <a href="/">
+          <h1 className="heading-font text-lg sm:text-2xl font-bold">
+            ThinkSpace
+          </h1>
+          <p
+            id="site-tagline"
+            className="body-font text-[10px] sm:text-xs opacity-75">
+            Where Ideas Come to Life
+          </p>
+        </a>
+      </div>
 
-          {token ? (
-            <button
-              onClick={handleLogout}
-              className="text-red-500 hover:underline cursor-pointer">
-              Logout
-            </button>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
-            </>
-          )}
-        </div>
-      </nav>
-    </div>
+      {/* Nav Links */}
+      <ul className="hidden sm:flex items-center gap-4 sm:gap-6">
+        <li className="body-font text-sm font-medium hover:opacity-70 transition-opacity hover:scale-110 duration-300 cursor-pointer">
+          Home
+        </li>
+        <li className="body-font text-sm font-medium hover:opacity-70 transition-opacity hover:scale-110 duration-300 cursor-pointer">
+          Archive
+        </li>
+        <li className="body-font text-sm font-medium hover:opacity-70 transition-opacity hover:scale-110 duration-300 cursor-pointer">
+          Authors
+        </li>
+        {/* <li className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
+          <a href="/signin">Sign in</a>
+        </li> */}
+        <a href="/signin">
+          <button className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
+            Sign in
+          </button>
+        </a>
+      </ul>
+
+      {/* Mobile Menu Icon */}
+      <button className="sm:hidden cursor-pointer" aria-label="Open Menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </nav>
   );
 };
 

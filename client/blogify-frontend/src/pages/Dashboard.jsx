@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BlogForm from "../components/BlogForm";
-import EditBlogModal from "../components/EditBlogModal"
+import EditBlogModal from "../components/EditBlogModal";
 
 const Dashboard = () => {
   const [blogs, setBlogs] = useState([]);
@@ -36,7 +36,6 @@ const Dashboard = () => {
   };
 
   // edit modal
-
   const [editingBlog, setEditingBlog] = useState(null);
 
   const handleEditClick = (blog) => {
