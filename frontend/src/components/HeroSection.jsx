@@ -3,10 +3,10 @@ import CategorySelect from "./CategorySelect";
 
 const HeroSection = () => {
   return (
-    <div className="min-h-screen flex flex-col pt-12">
+    <div className="sm:min-h-[calc(100vh-80px)] flex justify-center flex-col">
       <CategorySelect />
 
-      <section className="flex flex-col justify-center items-center gap-6 sm:gap-8 px-4 sm:px-8 py-4">
+      <div className="flex flex-col justify-center items-center gap-6 sm:gap-8 px-4 sm:px-8 py-4">
         <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center max-w-xl md:max-w-2xl">
           Discover Stories That Matter
         </h1>
@@ -23,7 +23,7 @@ const HeroSection = () => {
             </button>
           </a>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import Signin from "./pages/Signin";
 const App = () => {
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<Signin />} />

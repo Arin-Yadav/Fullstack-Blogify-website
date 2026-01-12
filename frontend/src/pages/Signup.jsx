@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Signup = () => {
@@ -31,7 +31,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center bg-gray-100 px-4">
+    <div className="h-screen w-full flex justify-center items-center bg-gray-100 px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4">
@@ -147,9 +147,12 @@ const Signup = () => {
         {/* Footer Link */}
         <p className="text-sm text-center text-gray-600 mt-4">
           Already have an account?{" "}
-          <a href="/signin" className="text-blue-600 hover:underline">
+          {/* <a href="/signin" className="text-blue-600 hover:underline">
             Sign in
-          </a>
+          </a> */}
+          <Link to="/signin" className="text-blue-600 hover:underline">
+             Sign in
+          </Link>
         </p>
       </form>
     </div>

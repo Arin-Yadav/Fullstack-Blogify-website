@@ -20,16 +20,6 @@ const CategorySelect = () => {
       <div className="max-w-7xl mx-auto">
         {/* Search + Filter Row */}
         <div className="flex flex-col md:flex-row gap-4 items-center justify-center mb-8">
-          {/* <div className="flex-1 max-w-2xl w-full relative">
-            <input
-              type="text"
-              placeholder="Search articles, topics, authors..."
-              className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-full text-sm sm:text-base border-2 hover:border-[#f38b15] outline-none transition-colors duration-75 ease-in"
-            />
-            <span className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 text-lg sm:text-xl">
-              🔍
-            </span>
-          </div> */}
           <div className="flex-1 max-w-xl sm:max-w-2xl w-full relative">
             <input
               type="text"
@@ -53,32 +43,6 @@ const CategorySelect = () => {
             </span>
           </div>
 
-          {/* Category Select */}
-          {/* <div className="relative inline-block">
-            <select
-              className="appearance-none px-6 py-4 rounded-full border-2 text-base hover:border-[#f38b15] outline-none transition-colors duration-75 ease-in cursor-pointer pr-12"
-              onFocus={() => setOpen(true)} // when dropdown opens
-              onBlur={() => setOpen(false)} // when dropdown closes
-            >
-              <option value="all">All Categories</option>
-              <option value="Technology">Technology</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Business">Business</option>
-              <option value="Health">Health</option>
-              <option value="Travel">Travel</option>
-              <option value="Food">Food</option>
-            </select>
-
-            <FaChevronDown
-              className={`absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-300 ease-in-out
-                          ${
-                            open
-                              ? "rotate-180 text-[#f38b15]"
-                              : "rotate-0 text-black"
-                          }
-            `}
-            />
-          </div> */}
           <div className="relative inline-block w-full sm:w-auto">
             {" "}
             {/* Trigger Button */}{" "}
@@ -116,19 +80,19 @@ const CategorySelect = () => {
 
         {/* Tag Buttons */}
         <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
-          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer hover:scale-105">
+          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer">
             📊 Productivity
           </button>
-          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer hover:scale-105">
+          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer">
             🧘 Mindfulness
           </button>
-          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer hover:scale-105">
+          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer">
             💻 Tech
           </button>
-          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer hover:scale-105">
+          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer">
             🎨 Creativity
           </button>
-          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer hover:scale-105">
+          <button className="body-font text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full font-medium bg-transparent hover:bg-[#f38b15] transition-colors duration-300 ease-in-out hover:text-white cursor-pointer">
             💚 Health
           </button>
         </div>

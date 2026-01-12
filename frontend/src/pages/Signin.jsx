@@ -32,7 +32,7 @@ const Signin = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center bg-gray-100 px-4">
+    <div className="h-screen w-full flex justify-center items-center bg-gray-100 px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4">
