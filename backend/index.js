@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
@@ -12,7 +14,13 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/blogs", checkForAuthentication, blogRoutes);

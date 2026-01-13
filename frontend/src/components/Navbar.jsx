@@ -1,6 +1,7 @@
 import React from "react";
 import { FaHamburger } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { RouteIndex, RouteSignin } from "../helpers/RouteName";
 
 const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ const Navbar = () => {
       {/* Logo + Title */}
       <div className="flex items-center gap-3 cursor-pointer">
         <h1 className="text-2xl sm:text-3xl">✍️</h1>
-        <a href="/">
+        <a href={RouteIndex}>
           <h1 className="heading-font text-lg sm:text-2xl font-bold">
             ThinkSpace
           </h1>
@@ -36,7 +37,7 @@ const Navbar = () => {
             Sign in
           </button>
         </a> */}
-        <Link to="/signin" className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
+        <Link to={RouteSignin} className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
           Sign in
         </Link>
       </ul>

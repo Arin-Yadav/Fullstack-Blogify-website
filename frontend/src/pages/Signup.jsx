@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { RouteSignin } from "../helpers/RouteName";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -16,11 +17,11 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/signup`,
         data
       );
-      console.log("Server response: ", response);
+      // console.log("Server response: ", response);
       navigate("/signin");
     } catch (error) {
       console.error(
@@ -150,7 +151,7 @@ const Signup = () => {
           {/* <a href="/signin" className="text-blue-600 hover:underline">
             Sign in
           </a> */}
-          <Link to="/signin" className="text-blue-600 hover:underline">
+          <Link to={RouteSignin} className="text-blue-600 hover:underline">
              Sign in
           </Link>
         </p>

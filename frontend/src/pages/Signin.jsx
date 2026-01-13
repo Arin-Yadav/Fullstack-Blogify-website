@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { RouteIndex, RouteSignup } from "../helpers/RouteName";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -15,14 +16,16 @@ const Signin = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/signin`,
-        data
+        data,
+        { withCredentials: true }
       );
       // console.log("Signed in: ", response.data) // shows what the backend response in this case a token
 
       // save user info or token
       localStorage.setItem("token", response.data.token);
 
-      navigate("/dashboard");
+      // navigate("/dashboard");
+      navigate(RouteIndex);
     } catch (error) {
       console.error(
         "Sign in failed: ",
@@ -96,9 +99,9 @@ const Signin = () => {
         {/* Footer Link */}
         <p className="text-sm text-center text-gray-600 mt-4">
           Don't have an account?{" "}
-          <a href="/signup" className="text-blue-600 hover:underline">
+          <Link to={RouteSignup} className="text-blue-600 hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </form>
     </div>
