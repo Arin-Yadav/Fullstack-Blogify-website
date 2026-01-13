@@ -24,30 +24,11 @@ A full-stack blogging platform where users can securely sign up, sigin, and mana
 
 ## 🛠️ Tech Stack
 
-| Frontend       | Backend             | Database      |
-|----------------|---------------------|---------------|
-| React + Vite   | Node.js + ExpressJs | MongoDB       |
-| Tailwind CSS   | JWT Auth            | (Mongoose)    |
-| Axios          | REST API            |               |
-
----
-
-## 📁 Folder Structure
-
-```
-client/
-  └── src/
-      ├── components/       # BlogForm, EditBlogModal, Navbar
-      ├── pages/            # Dashboard, Login, Signup
-      ├── App.jsx           # Route setup
-      └── main.jsx          # Entry point
-
-server/
-  ├── controllers/          # blogController.js, authController.js
-  ├── models/               # Blog.js, User.js
-  ├── routes/               # blogRoutes.js, authRoutes.js
-  └── server.js             # Express app setup
-```
+| Frontend       | Backend                    | Database      |
+|----------------|----------------------------|---------------|
+| React + Vite   | Node.js + ExpressJs        |  MongoDB      |
+| Tailwind CSS   | JWT Auth, cookie-parser    | (Mongoose)    |
+| Axios          | REST API                   |               |
 
 ---
 
@@ -63,7 +44,7 @@ cd MINI_BLOGIFY
 ### 2. Set up the backend
 
 ```bash
-cd server
+cd backend
 npm install
 touch .env
 ```
@@ -84,7 +65,7 @@ npm run dev
 ### 3. Set up the frontend
 
 ```bash
-cd ../client/blogify-frontend
+cd frontend
 npm install
 touch .env
 ```
@@ -92,7 +73,7 @@ touch .env
 Add your API URL:
 
 ```
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=Your_API_URL
 ```
 
 Start the frontend:
