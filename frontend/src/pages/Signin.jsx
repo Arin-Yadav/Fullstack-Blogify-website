@@ -19,7 +19,7 @@ const Signin = () => {
         data,
         { withCredentials: true }
       );
-      // console.log("Signed in: ", response.data) // shows what the backend response in this case a token
+      console.log("Signed in: ", response.data) // shows what the backend response in this case a token
 
       // save user info or token
       localStorage.setItem("token", response.data.token);

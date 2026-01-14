@@ -1,9 +1,26 @@
 import React from "react";
 import { FaHamburger } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RouteIndex, RouteSignin } from "../helpers/RouteName";
+// import axios from "axios";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const isLogged = localStorage.getItem("token");
+
+  const handleSignout = async () => {
+    try {
+      // await axios.get(`${import.meta.env.VITE_API_URL}/auth/signout`, {
+      //   withCredentials: true,
+      // });
+      localStorage.removeItem("token");
+      window.location.reload();
+      navigate(RouteIndex);
+    } catch (error) {
+      console.error(error.response?.data?.error || error.message);
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-10 w-full h-20 bg-white px-4 sm:px-6 lg:px-8 py-4 shadow-sm flex justify-between items-center">
       {/* Logo + Title */}
@@ -32,31 +49,21 @@ const Navbar = () => {
         <li className="body-font text-sm font-medium hover:text-[#0f766e] transition-opacity duration-300 cursor-pointer">
           Authors
         </li>
-        {/* <a href="/signin">
-          <button className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
+        {!isLogged ? (
+          <Link
+            to={RouteSignin}
+            className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
             Sign in
-          </button>
-        </a> */}
-        <Link to={RouteSignin} className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:hover:scale-105">
-          Sign in
-        </Link>
+          </Link>
+        ) : (
+          <li className="body-font text-sm font-medium bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300 cursor-pointer">
+            <button onClick={handleSignout}>Logout</button>
+          </li>
+        )}
       </ul>
 
       {/* Mobile Menu Icon */}
       <button className="sm:hidden cursor-pointer">
-        {/* <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg> */}
         <FaHamburger />
       </button>
     </nav>
