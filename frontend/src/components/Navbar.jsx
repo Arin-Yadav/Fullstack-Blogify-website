@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
-  // console.log(user.user)
+  // console.log(user.user) to check user data
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
