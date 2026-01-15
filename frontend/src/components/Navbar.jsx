@@ -1,29 +1,14 @@
 import React, { useState } from "react";
-import { FaHamburger } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { RouteIndex, RouteSignin } from "../helpers/RouteName";
+import { Link } from "react-router-dom";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
-import UserProfileDropdown from "./UserProfile";
-// import axios from "axios";
+import DesktopUserProfile from "./DesktopUserProfile";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user);
+  // console.log(user.user)
+
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const navigate = useNavigate();
-  const isLogged = localStorage.getItem("token");
-
-  const handleSignout = async () => {
-    try {
-      // await axios.get(`${import.meta.env.VITE_API_URL}/auth/signout`, {
-      //   withCredentials: true,
-      // });
-      localStorage.removeItem("token");
-      window.location.reload();
-      navigate(RouteIndex);
-    } catch (error) {
-      console.error(error.response?.data?.error || error.message);
-    }
-  };
 
   return (
     <nav className="sticky top-0 z-10 w-full h-20 bg-white px-4 sm:px-6 lg:px-8 py-4 shadow-sm flex justify-between items-center">
@@ -52,14 +37,12 @@ const Navbar = () => {
         <li className="body-font text-sm font-medium hover:text-[#0f766e] transition-colors duration-300 cursor-pointer">
           Authors
         </li>
-        {!isLogged ? (
-          <Link
-            to="/signin"
-            className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:scale-105">
-            Sign in
-          </Link>
+        {!user.isLoggedIn ? (
+          <button className="body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:scale-105">
+            <Link to="/signin">Sign in</Link>
+          </button>
         ) : (
-          <UserProfileDropdown />
+          <DesktopUserProfile user={user.user} />
         )}
       </ul>
       {/* Mobile Menu Icon */}
@@ -85,16 +68,14 @@ const Navbar = () => {
             <li className="w-full body-font text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300 cursor-pointer">
               Authors
             </li>
-            {!isLogged ? (
+            {!user.isLoggedIn ? (
               <Link
                 to="/signin"
                 className="w-full text-center body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:scale-105">
                 Sign in
               </Link>
             ) : (
-              <button
-                onClick={handleSignout}
-                className="w-full body-font text-sm font-medium bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+              <button className="w-full body-font text-sm font-medium bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
                 Logout
               </button>
             )}

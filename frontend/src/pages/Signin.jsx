@@ -2,8 +2,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteIndex, RouteSignup } from "../helpers/RouteName";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/slices/user.slice";
 
 const Signin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -19,12 +22,7 @@ const Signin = () => {
         data,
         { withCredentials: true }
       );
-      // console.log("Signed in: ", response.data) // shows what the backend response in this case a token
-
-      // save user info or token
-      localStorage.setItem("token", response.data.token);
-
-      // navigate("/dashboard");
+      dispatch(setUser(response.data.user));
       navigate(RouteIndex);
     } catch (error) {
       console.error(
@@ -92,7 +90,7 @@ const Signin = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors outline-none">
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors outline-none cursor-pointer">
           Sign In
         </button>
 
