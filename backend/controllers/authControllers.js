@@ -1,24 +1,41 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { handleError } = require("../helpers/handleError");
 
-async function handleSignUp(req, res) {
+async function handleSignUp(req, res, next) {
   try {
     const { fullName, email, password } = req.body;
     // note = add a check to see if user already exists
+    const checkUser = await User.findOne({ email });
+    if (checkUser) {
+      //user already registered message = two ways to handle this
+      // 1.
+      // res.send({
+      //   message: "User already exists",
+      //   success: false,
+      //   statusCode : 409,
+      // })
 
+      // 2.
+      next(handleError(409, "User already registered"));
+    }
+
+    // creating user
     // hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // creating user
     const user = await User.create({
       fullName,
       email,
       password: hashedPassword,
     });
-    res.status(201).json({ message: "User created" });
+    res.status(201).json({
+      message: "User created successfully",
+      success: "true",
+    });
   } catch (err) {
-    res.status(400).json({ error: "Signup failed" });
+    next(handleError(500, err.message || "Signup failed"));
   }
 }
 
@@ -36,45 +53,47 @@ async function handleSignout(req, res) {
   }
 }
 
-async function handleSignIn(req, res) {
+async function handleSignIn(req, res, next) {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user)
-      return res.status(404).json({ error: "Invalid login credentials" });
+      // return res.status(404).json({ error: "Invalid login credentials" });
+      next(handleError(404, "Invalid login credentials"));
 
     const hashedPassword = user.password;
     const matchUser = await bcrypt.compare(password, hashedPassword);
     if (!matchUser)
-      return res.status(401).json({ error: "Invalid login credentials" });
+      // return res.status(401).json({ error: "Invalid login credentials" });
+      next(handleError(404, "Invalid login credentials"));
 
     const token = jwt.sign(
       {
-        id: user._id,
+        _id: user._id,
         fullName: user.fullName,
         email: user.email,
+        avatar: user.avatar,
       },
       process.env.JWT_SECRET
-    ); // how id => because for any further operations we required id and the id comes from mongoose which auto generates a id.
+    );
     res.cookie("access-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       path: "/",
     });
+
+    const newUser = user.toObject({ getters: true });
+    delete newUser.password;
+
     res.status(200).json({
       success: true,
       message: "Login successful",
-      token,
-      user: {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-      },
+      // token,
+      user: newUser,
     });
-    // res.json({ token }, 200);
   } catch (err) {
-    res.json(500).json({ error: "Login error" });
+    next(handleError(500, err.message || "Signin failed"));
   }
 }
 

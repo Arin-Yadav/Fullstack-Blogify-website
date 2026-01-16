@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { RouteSignin } from "../helpers/RouteName";
+import { showToast } from "../helpers/ShowToast";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -15,18 +16,20 @@ const Signup = () => {
 
   const password = watch("password");
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (values) => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/signup`,
-        data
-      );
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, values);
       // console.log("Server response: ", response);
+      showToast("success", "Account created successfully!");
       navigate("/signin");
     } catch (error) {
       console.error(
         "Error submitting form: ",
         error.response?.data || error.message
+      );
+      showToast(
+        "error",
+        error.response?.data?.message || "Signup failed. Please try again."
       );
     }
   };
@@ -152,7 +155,7 @@ const Signup = () => {
             Sign in
           </a> */}
           <Link to={RouteSignin} className="text-blue-600 hover:underline">
-             Sign in
+            Sign in
           </Link>
         </p>
       </form>

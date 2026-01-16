@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { RouteIndex, RouteSignup } from "../helpers/RouteName";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/user.slice";
+import { showToast } from "../helpers/ShowToast";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -15,19 +16,24 @@ const Signin = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (values) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/signin`,
-        data,
+        values,
         { withCredentials: true }
       );
+      showToast("success", "Signed in successfully!");
       dispatch(setUser(response.data.user));
       navigate(RouteIndex);
     } catch (error) {
-      console.error(
-        "Sign in failed: ",
-        error.response?.data?.error || error.message
+      // console.error(
+      //   "Sign in failed: ",
+      //   error.response?.data?.error || error.message
+      // );
+      showToast(
+        "error",
+        error.response?.data?.message || "Sign in failed. Please try again."
       );
     }
   };

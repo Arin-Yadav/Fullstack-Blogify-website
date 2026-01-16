@@ -28,10 +28,10 @@ app.use("/api/blogs", checkForAuthentication, blogRoutes);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("MongoDB connected");
+    console.log("Connected to MongoDB");
   })
   .catch((err) => {
-    console.log(err);
+    console.error("Error connecting to MongoDB:", err);
   });
 
 app.get("/", (req, res) => {
@@ -41,3 +41,13 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server started at PORT: ${PORT}`);
 });
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500
+  const message = err.message || 'internal server error'
+  res.status(statusCode).json({ 
+    success: false,
+    message,
+    statusCode
+  });
+})
