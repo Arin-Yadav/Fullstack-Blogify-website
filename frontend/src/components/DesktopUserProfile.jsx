@@ -4,7 +4,10 @@ import { FaUserCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../redux/slices/user.slice";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { FaRegUser } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoLogOutOutline } from "react-icons/io5";
 import axios from "axios";
 
 export default function DesktopUserProfile({ user }) {
@@ -33,13 +36,12 @@ export default function DesktopUserProfile({ user }) {
             <img
               src={user.photoUrl}
               alt={user.fullName}
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-7 h-7 rounded-full object-cover"
             />
           ) : (
-            <FaUserCircle className="w-6 h-6 rounded" />
+            <FaUserCircle className="w-8 h-8 rounded" />
           )}
-          <span className="font-medium">{user.fullName}</span>
-          <RiArrowDropDownLine className="w-5 h-5" />
+          <RiArrowDropDownLine className="w-8 h-8" />
         </MenuButton>
 
         {/* Dropdown Menu */}
@@ -51,24 +53,39 @@ export default function DesktopUserProfile({ user }) {
               <Link
                 href="#"
                 className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
-                Profile
+                <div className="flex flex-col">
+                  <span className="font-medium">{user.fullName}</span>
+                  <span className="text-sm">{user.email}</span>
+                </div>
               </Link>
             </MenuItem>
-            <MenuItem>
-              <Link
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
-                Settings
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <button
-                type="submit"
-                onClick={handleSignout}
-                className="block w-full px-4 py-2 text-left text-sm text-white bg-red-500 hover:bg-red-600 hover:text-white rounded cursor-pointer">
-                Sign out
-              </button>
-            </MenuItem>
+            <div className="border-t">
+              <MenuItem>
+                <Link
+                  href="#"
+                  className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
+                  <FaRegUser />
+                  Profile
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link
+                  href="#"
+                  className="flex gap-2 items-center  px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
+                  <IoSettingsOutline />
+                  Settings
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  type="submit"
+                  onClick={handleSignout}
+                  className="flex gap-2 items-center  w-full px-4 py-2 text-left text-sm text-white bg-red-500 hover:bg-red-600 hover:text-white rounded cursor-pointer">
+                  <IoLogOutOutline className="w-5 h-5" />
+                  Sign out
+                </button>
+              </MenuItem>
+            </div>
           </div>
         </MenuItems>
       </Menu>
