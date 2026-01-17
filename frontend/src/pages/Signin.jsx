@@ -23,14 +23,10 @@ const Signin = () => {
         values,
         { withCredentials: true }
       );
-      showToast("success", "Signed in successfully!");
       dispatch(setUser(response.data.user));
       navigate(RouteIndex);
+      showToast("success", "Signed in successfully!");
     } catch (error) {
-      // console.error(
-      //   "Sign in failed: ",
-      //   error.response?.data?.error || error.message
-      // );
       showToast(
         "error",
         error.response?.data?.message || "Sign in failed. Please try again."

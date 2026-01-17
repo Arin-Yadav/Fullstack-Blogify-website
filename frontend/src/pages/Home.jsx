@@ -7,16 +7,9 @@ import Newsletter from "../components/Newsletter";
 const Home = () => {
   return (
     <div>
-      <header>
-        <Navbar />
-      </header>
-
-      <main>
-        <HeroSection />
-        <FeaturedPost />
-        <Newsletter />
-      </main>
-      
+      <HeroSection />
+      <FeaturedPost />
+      <Newsletter />
       <Footer />
     </div>
   );

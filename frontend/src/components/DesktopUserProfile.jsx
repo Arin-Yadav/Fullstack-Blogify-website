@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { RouteIndex } from "../helpers/RouteName";
+import { RouteIndex, RouteProfile } from "../helpers/RouteName";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../redux/slices/user.slice";
@@ -62,7 +62,7 @@ export default function DesktopUserProfile({ user }) {
             <div className="border-t">
               <MenuItem>
                 <Link
-                  href="#"
+                  to="/profile"
                   className="flex gap-2 items-center px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
                   <FaRegUser />
                   Profile

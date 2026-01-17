@@ -11,7 +11,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-10 w-full h-20 bg-white px-4 sm:px-6 lg:px-8 py-4 shadow-sm flex justify-between items-center">
+    <nav className="sticky top-0 z-10 w-full h-16 bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 shadow-sm flex justify-between items-center">
       {/* Logo + Title */}
       <div className="flex items-center gap-3 cursor-pointer">
         <h1 className="text-2xl sm:text-3xl">✍️</h1>
