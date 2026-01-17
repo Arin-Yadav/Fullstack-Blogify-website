@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes")
 const blogRoutes = require("./routes/blogRoutes");
 const { checkForAuthentication } = require("./middlewares/authMiddleware");
 
@@ -23,6 +24,7 @@ app.use(
 );
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/blogs", checkForAuthentication, blogRoutes);
 
 mongoose

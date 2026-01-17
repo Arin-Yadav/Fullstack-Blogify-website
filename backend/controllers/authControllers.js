@@ -36,6 +36,7 @@ async function handleSignUp(req, res, next) {
     });
   } catch (err) {
     next(handleError(500, err.message || "Signup failed"));
+    // console.log(err)
   }
 }
 

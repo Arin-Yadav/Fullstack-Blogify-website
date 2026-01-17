@@ -9,18 +9,21 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
 import axios from "axios";
+import { showToast } from "../helpers/ShowToast";
 
 export default function DesktopUserProfile({ user }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // console.log(user)
   const handleSignout = async () => {
     try {
-      await axios.get(`${import.meta.env.VITE_API_URL}/auth/signout`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/signout`, {
         withCredentials: true,
       });
       dispatch(removeUser());
       navigate(RouteIndex);
+      showToast("success", response.data.message)
     } catch (error) {
       console.error(error.response?.data?.error || error.message);
     }
@@ -34,7 +37,7 @@ export default function DesktopUserProfile({ user }) {
           {/* User photo (fallback to icon if no photo) */}
           {user.photoUrl ? (
             <img
-              src={user.photoUrl}
+              src={user.avatar}
               alt={user.fullName}
               className="w-7 h-7 rounded-full object-cover"
             />
