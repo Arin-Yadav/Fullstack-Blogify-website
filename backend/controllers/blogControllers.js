@@ -1,4 +1,5 @@
-const Blog = require("../models/blog");
+// const Blog = require("../models/blog");
+import Blog from "../models/blog.js";
 
 async function createBlogs(req, res) {
   const { title, content } = req.body;
@@ -44,9 +45,10 @@ const deleteBlogs = async (req, res) => {
   }
 };
 
-module.exports = {
-  createBlogs,
-  getBlogs,
-  updateBlogs,
-  deleteBlogs,
-};
+// module.exports = {
+//   createBlogs,
+//   getBlogs,
+//   updateBlogs,
+//   deleteBlogs,
+// };
+export  { createBlogs, getBlogs, updateBlogs, deleteBlogs };

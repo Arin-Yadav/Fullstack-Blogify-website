@@ -1,53 +1,63 @@
 import { showToast } from "../helpers/ShowToast";
 import axios from "axios";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../redux/slices/user.slice";
+// import { setUser } from "../redux/slices/user.slice";
 import { useFetch } from "../hooks/UseFetch";
 import LoadingSpinner from "../components/Loading";
+import { useEffect, useState } from "react";
+import Dropzone from "react-dropzone";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user.user);
-
-  const {
-    data: userData,
-    loading,
-    error,
-  } = useFetch(
-    `${import.meta.env.VITE_API_URL}/user/get-user/${userDetails._id}`,
-    { withCredentials: true },
-  );
+  const [filePreview, setFilePreview] = useState();
+  const [file, setFile] = useState();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     // Pre-fill form fields with fetched user data
-  //     Object.keys(userData.user).forEach((key) => {
-  //       if (key in userData.user) {
-  //         // Set default values in the form
-  //         register(key).onChange({ target: { value: userData.user[key] } });
-  //       }
-  //     });
-  //   }
-  // }, [userData]);
+  const {
+    data: userData,
+    loading,
+    error: _error,
+    // error,
+  } = useFetch(
+    `${import.meta.env.VITE_API_URL}/user/get-user/${userDetails._id}`,
+    { withCredentials: true },
+  );
+  // console.log(userData?.user) // to check userdata
+
+  useEffect(() => {
+    if (userData && userData.success) {
+      reset({
+        fullName: userData.user.fullName,
+        email: userData.user.email,
+        bio: userData.user.bio,
+      });
+    }
+  }, [userData, reset]);
 
   const onSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("data", JSON.stringify(values));
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/signin`,
-        values,
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/user/update-user/${userData.user._id}`,
+        formData,
         {
           withCredentials: true,
         },
       );
-      showToast("success", "Saved changes!");
-      dispatch(setUser(response.data.user));
+      // console.log(userData?.user._id) // to check userdata
+      // dispatch(setUser(response.data.user));
+      showToast("success", response.data.message);
     } catch (error) {
       showToast(
         "error",
@@ -57,19 +67,38 @@ const Profile = () => {
     }
   };
 
+  const handleFileSelection = (files) => {
+    const file = files[0];
+    const preview = URL.createObjectURL(file);
+    setFile(file);
+    setFilePreview(preview);
+  };
+
   if (loading) return <LoadingSpinner />;
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center px-4">
       <div className="bg-gray-100 w-full max-w-3xl rounded-xl p-6 space-y-4">
         {/* avatar  */}
-        <div className="flex justify-center">
-          <img
-            src={userData?.user?.avatar}
-            alt="Avatar"
-            className="w-44 h-44 rounded-full border-2 border-gray-700 object-cover cursor-pointer"
-          />
-        </div>
+        {/* file selection or uploading using react dropzone  */}
+        <Dropzone
+          onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <div className="flex justify-center">
+                  <img
+                    src={filePreview ? filePreview : userData?.user?.avatar}
+                    alt="Avatar"
+                    className="w-44 h-44 rounded-full border-2 border-gray-700 object-cover cursor-pointer"
+                  />
+                </div>
+              </div>
+            </section>
+          )}
+        </Dropzone>
+
         {/* form  */}
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -84,7 +113,7 @@ const Profile = () => {
             <input
               id="fullName"
               type="text"
-              placeholder={userData?.user?.fullName}
+              placeholder="Enter your fullname"
               className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("fullName", {
                 required: "Fullname is required",
@@ -107,7 +136,7 @@ const Profile = () => {
             <input
               id="email"
               type="email"
-              placeholder={userData?.user?.email}
+              placeholder="Enter your email"
               className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("email", {
                 required: "Email is required",
@@ -132,7 +161,7 @@ const Profile = () => {
             <textarea
               id="bio"
               type="text"
-              placeholder={userData?.user?.bio}
+              placeholder="Enter your bio here..."
               className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("bio", {
                 required: "Bio is required",

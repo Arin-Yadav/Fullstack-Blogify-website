@@ -1,14 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
+// const express = require("express");
+// const cors = require("cors");
+// const mongoose = require("mongoose");
+// const cookieParser = require("cookie-parser");
+// require("dotenv").config();
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+dotenv.config();
 
-require("dotenv").config();
-
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes")
-const blogRoutes = require("./routes/blogRoutes");
-const { checkForAuthentication } = require("./middlewares/authMiddleware");
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
+import { checkForAuthentication } from "./middlewares/authMiddleware.js";
 
 const PORT = process.env.PORT || 5000;
 const app = express();

@@ -1,7 +1,11 @@
-const User = require("../models/user");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { handleError } = require("../helpers/handleError");
+// const User = require("../models/user");
+// const bcrypt = require("bcryptjs");
+// const jwt = require("jsonwebtoken");
+// const { handleError } = require("../helpers/handleError");
+import User from "../models/user.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { handleError } from "../helpers/handleError.js";
 
 async function handleSignUp(req, res, next) {
   try {
@@ -18,7 +22,7 @@ async function handleSignUp(req, res, next) {
       // })
 
       // 2.
-      next(handleError(409, "User already registered"));
+      return next(handleError(409, "User already registered"));
     }
 
     // creating user
@@ -60,13 +64,13 @@ async function handleSignIn(req, res, next) {
     const user = await User.findOne({ email });
     if (!user)
       // return res.status(404).json({ error: "Invalid login credentials" });
-      next(handleError(404, "Invalid login credentials"));
+      return next(handleError(404, "Invalid login credentials"));
 
     const hashedPassword = user.password;
     const matchUser = await bcrypt.compare(password, hashedPassword);
     if (!matchUser)
       // return res.status(401).json({ error: "Invalid login credentials" });
-      next(handleError(404, "Invalid login credentials"));
+      return next(handleError(404, "Invalid login credentials"));
 
     const token = jwt.sign(
       {
@@ -75,7 +79,7 @@ async function handleSignIn(req, res, next) {
         email: user.email,
         avatar: user.avatar,
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
     );
     res.cookie("access-token", token, {
       httpOnly: true,
@@ -98,8 +102,9 @@ async function handleSignIn(req, res, next) {
   }
 }
 
-module.exports = {
-  handleSignUp,
-  handleSignIn,
-  handleSignout,
-};
+// module.exports = {
+//   handleSignUp,
+//   handleSignIn,
+//   handleSignout,
+// };
+export { handleSignUp, handleSignIn, handleSignout };

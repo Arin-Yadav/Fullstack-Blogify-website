@@ -1,4 +1,5 @@
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 function checkForAuthentication(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1];
@@ -20,6 +21,7 @@ function checkForAuthentication(req, res, next) {
   }
 }
 
-module.exports = {
-  checkForAuthentication,
-};
+// module.exports = {
+//   checkForAuthentication,
+// };
+export { checkForAuthentication };

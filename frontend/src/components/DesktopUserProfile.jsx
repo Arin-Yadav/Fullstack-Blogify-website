@@ -35,7 +35,8 @@ export default function DesktopUserProfile({ user }) {
         {/* Profile Button */}
         <MenuButton className="flex items-center cursor-pointer space-x-2 rounded-md px-5 py-2 bg-gray-100 hover:bg-gray-200 focus:outline-none">
           {/* User photo (fallback to icon if no photo) */}
-          {user.photoUrl ? (
+          {/* {user.photoUrl ? ( */}
+          {user.avatar ? (
             <img
               src={user.avatar}
               alt={user.fullName}
