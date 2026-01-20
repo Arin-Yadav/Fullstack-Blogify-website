@@ -13,6 +13,7 @@ dotenv.config();
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 import { checkForAuthentication } from "./middlewares/authMiddleware.js";
 
 const PORT = process.env.PORT || 5000;
@@ -30,6 +31,7 @@ app.use(
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/category", categoryRoutes);
 app.use("/api/blogs", checkForAuthentication, blogRoutes);
 
 mongoose

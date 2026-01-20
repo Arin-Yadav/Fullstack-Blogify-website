@@ -11,7 +11,6 @@ export const useFetch = (url, options = {}, dependencies = []) => {
       setLoading(true);
       try {
         const response = await axios.get(url, options);
-        // console.log(response);
         const responseData = response.data
         setData(responseData);
         setError();

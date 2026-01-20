@@ -1,9 +1,10 @@
 import { FaHome, FaUser, FaSignOutAlt, FaArchive, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { RouteIndex } from "../helpers/RouteName";
+import { RouteCategoryDetails, RouteIndex } from "../helpers/RouteName";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../redux/slices/user.slice";
 import axios from "axios";
+import { BiCategory } from "react-icons/bi";
 // import { useState } from "react";
 
 export default function Sidebar() {
@@ -39,6 +40,13 @@ export default function Sidebar() {
           className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
           <FaArchive className="mr-2" /> Archive
         </Link>
+
+        <Link
+          to={RouteCategoryDetails}
+          className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
+          <BiCategory className="mr-2" /> Category
+        </Link>
+        
         <Link
           to={RouteIndex}
           className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
