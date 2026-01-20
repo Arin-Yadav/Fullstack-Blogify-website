@@ -2,11 +2,12 @@ import { showToast } from "../helpers/ShowToast";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-// import { setUser } from "../redux/slices/user.slice";
-import { useFetch } from "../hooks/UseFetch";
+import { setUser } from "../redux/slices/user.slice";
+import { useFetch } from "../hooks/UseFetch.js";
 import LoadingSpinner from "../components/Loading";
 import { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
+import { IoCameraOutline } from "react-icons/io5";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,6 @@ const Profile = () => {
     `${import.meta.env.VITE_API_URL}/user/get-user/${userDetails._id}`,
     { withCredentials: true },
   );
-  // console.log(userData?.user) // to check userdata
 
   useEffect(() => {
     if (userData && userData.success) {
@@ -56,7 +56,8 @@ const Profile = () => {
         },
       );
       // console.log(userData?.user._id) // to check userdata
-      // dispatch(setUser(response.data.user));
+      dispatch(setUser(response.data.user));
+      // console.log(response.data.user);
       showToast("success", response.data.message);
     } catch (error) {
       showToast(
@@ -77,47 +78,47 @@ const Profile = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center px-4">
-      <div className="bg-gray-100 w-full max-w-3xl rounded-xl p-6 space-y-4">
-        {/* avatar  */}
-        {/* file selection or uploading using react dropzone  */}
-        <Dropzone
-          onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}>
-          {({ getRootProps, getInputProps }) => (
-            <section>
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <div className="flex justify-center">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center px-4 py-8">
+      <div className="w-full max-w-4xl bg-white rounded-xl shadow-md p-6 space-y-8">
+        {/* Top section: Avatar + Upload */}
+        <div className="flex flex-col justify-center sm:flex-row sm:items-center sm:space-x-8 space-y-6 sm:space-y-0">
+          <Dropzone
+            onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}>
+            {({ getRootProps, getInputProps }) => (
+              <section className="flex justify-center sm:justify-start w-full sm:w-auto">
+                <div {...getRootProps()} className="relative cursor-pointer">
+                  <input {...getInputProps()} />
                   <img
                     src={filePreview ? filePreview : userData?.user?.avatar}
                     alt="Avatar"
-                    className="w-44 h-44 rounded-full border-2 border-gray-700 object-cover cursor-pointer"
+                    className="w-32 h-32 sm:w-44 sm:h-44 rounded-full border-2 border-gray-300 object-cover"
                   />
+                  <div className="absolute bottom-2 right-2 bg-gray-800 text-white p-2 rounded-full shadow-md">
+                    <IoCameraOutline className="w-5 h-5" />
+                  </div>
                 </div>
-              </div>
-            </section>
-          )}
-        </Dropzone>
+              </section>
+            )}
+          </Dropzone>
+        </div>
 
-        {/* form  */}
+        {/* Form Section */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full rounded-xl p-6 space-y-4">
-          {/* Full name  */}
-          <div className="flex flex-col">
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Full Name */}
+          <div className="flex flex-col col-span-1">
             <label
               htmlFor="fullName"
               className="text-sm font-medium text-gray-700">
-              Fullname
+              Full Name
             </label>
             <input
               id="fullName"
               type="text"
-              placeholder="Enter your fullname"
+              placeholder="Enter your full name"
               className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              {...register("fullName", {
-                required: "Fullname is required",
-              })}
+              {...register("fullName", { required: "Full name is required" })}
             />
             {errors.fullName && (
               <p className="text-xs text-red-500 mt-1">
@@ -126,8 +127,8 @@ const Profile = () => {
             )}
           </div>
 
-          {/* Email  */}
-          <div className="flex flex-col">
+          {/* Email */}
+          <div className="flex flex-col col-span-1">
             <label
               htmlFor="email"
               className="text-sm font-medium text-gray-700">
@@ -153,31 +154,31 @@ const Profile = () => {
             )}
           </div>
 
-          {/* Bio */}
-          <div className="flex flex-col">
+          {/* Bio (spans full width) */}
+          <div className="flex flex-col col-span-1 sm:col-span-2">
             <label htmlFor="bio" className="text-sm font-medium text-gray-700">
               Bio
             </label>
             <textarea
               id="bio"
-              type="text"
               placeholder="Enter your bio here..."
+              rows={4}
               className="mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              {...register("bio", {
-                required: "Bio is required",
-              })}
+              {...register("bio", { required: "Bio is required" })}
             />
             {errors.bio && (
               <p className="text-xs text-red-500 mt-1">{errors.bio.message}</p>
             )}
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors outline-none cursor-pointer">
-            Submit
-          </button>
+          {/* Submit Button (spans full width) */}
+          <div className="col-span-1 sm:col-span-2">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              Save Changes
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -9,8 +9,8 @@ import bcrypt from "bcryptjs";
 
 async function getUser(req, res, next) {
   try {
-    const { userId } = req.params;
-    const user = await User.findById(userId);
+    const { userid } = req.params;
+    const user = await User.findById(userid);
     if (!user) {
       return next(handleError(404, "User not found"));
     }
@@ -20,7 +20,7 @@ async function getUser(req, res, next) {
       user,
     });
   } catch (error) {
-    next(handleError(500, error.message || "Internal Server Error"));
+    return next(handleError(500, error.message || "Internal Server Error"));
   }
 }
 
@@ -41,22 +41,6 @@ async function updateUser(req, res, next) {
       user.password = hashedPassword;
     }
 
-    const newUser = user.toObject({ getters: true });
-    delete newUser.password;
-
-    // if (req.file) {
-    //   // Upload an image
-    //   const uploadResult = await cloudinary.uploader
-    //     .upload(req.file.path, {
-    //       folder: "blog-website",
-    //       resource_type: "auto",
-    //     })
-    //     .catch((error) => {
-    //       next(handleError(500, error.message || "Internal Server Error"));
-    //     });
-    //     user.avatar = uploadResult.secure_url
-    // }
-
     if (req.file) {
       try {
         // Upload an image
@@ -71,6 +55,9 @@ async function updateUser(req, res, next) {
         return next(handleError(500, error.message || "Internal Server Error"));
       }
     }
+
+    const newUser = user.toObject({ getters: true });
+    delete newUser.password;
 
     await user.save();
 

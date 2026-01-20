@@ -1,29 +1,33 @@
 import { Link, useNavigate } from "react-router-dom";
-import { RouteIndex, RouteProfile } from "../helpers/RouteName";
+import { RouteIndex } from "../helpers/RouteName";
 import { FaUserCircle } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../redux/slices/user.slice";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { FaRegUser } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
+import { CiCamera } from "react-icons/ci";
 import axios from "axios";
 import { showToast } from "../helpers/ShowToast";
 
-export default function DesktopUserProfile({ user }) {
+export default function DesktopUserProfile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
-  // console.log(user)
   const handleSignout = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/signout`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/auth/signout`,
+        {
+          withCredentials: true,
+        },
+      );
       dispatch(removeUser());
       navigate(RouteIndex);
-      showToast("success", response.data.message)
+      showToast("success", response.data.message);
     } catch (error) {
       console.error(error.response?.data?.error || error.message);
     }
@@ -35,11 +39,10 @@ export default function DesktopUserProfile({ user }) {
         {/* Profile Button */}
         <MenuButton className="flex items-center cursor-pointer space-x-2 rounded-md px-5 py-2 bg-gray-100 hover:bg-gray-200 focus:outline-none">
           {/* User photo (fallback to icon if no photo) */}
-          {/* {user.photoUrl ? ( */}
-          {user.avatar ? (
+          {user.user.avatar ? (
             <img
-              src={user.avatar}
-              alt={user.fullName}
+              src={user.user.avatar}
+              alt="image"
               className="w-7 h-7 rounded-full object-cover"
             />
           ) : (
@@ -58,8 +61,8 @@ export default function DesktopUserProfile({ user }) {
                 href="#"
                 className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
                 <div className="flex flex-col">
-                  <span className="font-medium">{user.fullName}</span>
-                  <span className="text-sm">{user.email}</span>
+                  <span className="font-medium">{user.user.fullName}</span>
+                  <span className="text-sm">{user.user.email}</span>
                 </div>
               </Link>
             </MenuItem>
@@ -93,6 +96,7 @@ export default function DesktopUserProfile({ user }) {
           </div>
         </MenuItems>
       </Menu>
+      
     </div>
   );
 }

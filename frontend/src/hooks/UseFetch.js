@@ -22,6 +22,7 @@ export const useFetch = (url, options = {}, dependencies = []) => {
       }
     };
     fetchData();
-  }, dependencies);
+  // }, [url, options, dependencies]);
+  }, dependencies); // original
   return { data, loading, error };
 };
