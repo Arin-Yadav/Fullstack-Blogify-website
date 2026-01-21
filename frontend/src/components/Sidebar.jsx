@@ -1,9 +1,13 @@
-import { FaHome, FaUser, FaSignOutAlt, FaArchive, FaUserCircle } from "react-icons/fa";
+import { FaHome, FaUser, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { LuUsers } from "react-icons/lu";
+import { FaRegComments } from "react-icons/fa6";
+import { IoHomeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { RouteCategoryDetails, RouteIndex } from "../helpers/RouteName";
+import { RouteBlog, RouteCategoryDetails, RouteIndex } from "../helpers/RouteName";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../redux/slices/user.slice";
 import axios from "axios";
+import { GrBlog } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
 // import { useState } from "react";
 
@@ -32,13 +36,13 @@ export default function Sidebar() {
         <Link
           to={RouteIndex}
           className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
-          <FaHome className="mr-2" /> Home
+          <IoHomeOutline className="mr-2" /> Home
         </Link>
 
         <Link
-          to={RouteIndex}
+          to={RouteBlog}
           className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
-          <FaArchive className="mr-2" /> Archive
+          <GrBlog className="mr-2" /> Blog
         </Link>
 
         <Link
@@ -50,7 +54,13 @@ export default function Sidebar() {
         <Link
           to={RouteIndex}
           className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
-          <FaUser className="mr-2" /> Authors
+          <LuUsers className="mr-2" /> Users
+        </Link>
+
+        <Link
+          to={RouteIndex}
+          className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300">
+          <FaRegComments className="mr-2" /> Comments
         </Link>
       </nav>
 
