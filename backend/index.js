@@ -1,8 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// const mongoose = require("mongoose");
-// const cookieParser = require("cookie-parser");
-// require("dotenv").config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -14,7 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
-import { checkForAuthentication } from "./middlewares/authMiddleware.js";
+// import { checkForAuthentication } from "./middlewares/authMiddleware.js";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -32,7 +27,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/category", categoryRoutes);
-app.use("/api/blogs", checkForAuthentication, blogRoutes);
+app.use("/api/blog", blogRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

@@ -1,7 +1,3 @@
-// const User = require("../models/user");
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const { handleError } = require("../helpers/handleError");
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -102,9 +98,4 @@ async function handleSignIn(req, res, next) {
   }
 }
 
-// module.exports = {
-//   handleSignUp,
-//   handleSignIn,
-//   handleSignout,
-// };
 export { handleSignUp, handleSignIn, handleSignout };

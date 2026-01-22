@@ -1,19 +1,13 @@
-// const express = require("express")
-// const { getBlogs, createBlogs, updateBlogs, deleteBlogs } = require("../controllers/blogControllers")
-// const router = express.Router()
-import express from "express";
-import {
-  getBlogs,
-  createBlogs,
-  updateBlogs,
-  deleteBlogs,
-} from "../controllers/blogControllers.js";
-const router = express.Router();
+import express from 'express'
+import { createBlog, deleteBlog, editBlog, showAllBlog, updateBlog } from '../controllers/blogControllers.js'
+import { upload } from "../config/multer.js";
 
-router.post("/", createBlogs);
-router.get("/", getBlogs);
-router.put("/:id", updateBlogs);
-router.delete("/:id", deleteBlogs);
+const router = express()
 
-// module.exports = router;
-export default router;
+router.post('/add', upload.single('file'), createBlog)
+router.get('/edit/:blogid', editBlog)
+router.put('/update/:blogid', upload.single('file'), updateBlog)
+router.delete('/delete/:blogid', deleteBlog)
+router.get('/get-all', showAllBlog)
+
+export default router

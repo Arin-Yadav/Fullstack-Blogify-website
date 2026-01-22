@@ -1,7 +1,3 @@
-// const { default: cloudinary } = require("../config/cloudinary");
-// const { handleError } = require("../helpers/handleError");
-// const User = require("../models/user");
-// const bcrypt = require("bcryptjs");
 import cloudinary from "../config/cloudinary.js";
 import { handleError } from "../helpers/handleError.js";
 import User from "../models/user.js";
@@ -71,8 +67,5 @@ async function updateUser(req, res, next) {
   }
 }
 
-// module.exports = {
-//   getUser,
-//   updateUser,
-// };
+
 export { getUser, updateUser };

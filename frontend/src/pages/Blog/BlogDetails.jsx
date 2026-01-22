@@ -1,8 +1,41 @@
-import React from "react";
-import { RouteAddBlog } from "../../helpers/RouteName";
+import React, { useState } from "react";
+import { RouteAddBlog, RouteEditBlog } from "../../helpers/RouteName";
 import { Link } from "react-router-dom";
+import { deleteData } from "../../helpers/DeleteData";
+import { showToast } from "../../helpers/ShowToast";
+import { useFetch } from "../../hooks/UseFetch";
+import LoadingSpinner from "../../components/Loading";
+import dayjs from 'dayjs';
 
 const BlogDetails = () => {
+  const [freshdata, setFreshdata] = useState(false);
+
+  const {
+    data: blogData,
+    loading,
+    _error,
+  } = useFetch(
+    `${import.meta.env.VITE_API_URL}/blog/get-all`,
+    {
+      withCredentials: true,
+    },
+    [freshdata],
+  );
+
+  const handleDelete = (id) => {
+    const response = deleteData(
+      `${import.meta.env.VITE_API_URL}/blog/delete/${id}`,
+    );
+    if (response) {
+      setFreshdata(!freshdata);
+      showToast("success", "Data deleted");
+    } else {
+      showToast("error", "Data not deleted");
+    }
+  };
+  console.log(blogData)
+
+  if (loading) return <LoadingSpinner />;
   return (
     <div className="min-h-[calc(100vh-4rem)] p-5">
       <div className="inline-block">
@@ -40,22 +73,31 @@ const BlogDetails = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {/* {categoryData && categoryData.category.length > 0 ? (
-              categoryData?.category?.map((category) => (
-                <tr key={category._id} className="hover:bg-gray-50">
+            {blogData && blogData.blog.length > 0 ? (
+              blogData?.blog?.map((blog) => (
+                <tr key={blog._id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm text-gray-800">
-                    {category.name}
+                    {blog.author.fullName}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {blog.category.name}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-500">
-                    {category.slug}
+                    {blog.title}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-500">
+                    {blog.slug}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-500">
+                    {dayjs(blog.createdAt).format('DD-MM-YYYY')}
                   </td>
                   <td className="px-4 py-2">
                     <div className="flex gap-2">
                       <button className="px-3 py-1 text-sm text-blue-600 border border-blue-200 rounded hover:bg-blue-50">
-                        <Link to={RouteEditCategory(category._id)}>Edit</Link>
+                        <Link to={RouteEditBlog(blog._id)}>Edit</Link>
                       </button>
                       <button
-                        onClick={() => handleDelete(category._id)}
+                        onClick={() => handleDelete(blog._id)}
                         className="px-3 py-1 text-sm text-red-600 border border-red-200 rounded hover:bg-red-50">
                         Delete
                       </button>
@@ -69,7 +111,7 @@ const BlogDetails = () => {
                   <p>No data found</p>
                 </td>
               </tr>
-            )} */}
+            )}
           </tbody>
         </table>
       </div>

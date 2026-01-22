@@ -17,9 +17,9 @@ export const RouteEditCategory = (category_id) => {
 
 export const RouteBlog = '/blog'
 export const RouteAddBlog = '/blog/add'
-export const RouteEditBlog = (blog_id) => {
-    if(blog_id) {
-        return `/category/edit/${blog_id}`
+export const RouteEditBlog = (blogid) => {
+    if(blogid) {
+        return `/blog/edit/${blogid}`
     } 
-       return `/category/edit/:blog_id`
+       return `/blog/edit/:blog_id`
 }

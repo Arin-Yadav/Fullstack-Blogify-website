@@ -1,54 +1,95 @@
-// const Blog = require("../models/blog");
+import cloudinary from "../config/cloudinary.js";
+import { handleError } from "../helpers/handleError.js";
 import Blog from "../models/blog.js";
+import { encode } from "entities";
 
-async function createBlogs(req, res) {
-  const { title, content } = req.body;
-  const userId = req.user.id;
-  const blog = await Blog.create({ title, content, author: userId });
-  res.status(201).json(blog);
-}
-
-async function getBlogs(req, res) {
-  const blogs = await Blog.find().populate("author", "fullName");
-  res.json(blogs);
-}
-
-// Update a blog
-const updateBlogs = async (req, res) => {
+async function createBlog(req, res, next) {
   try {
-    const { title, content } = req.body;
-    const blog = await Blog.findOneAndUpdate(
-      { _id: req.params.id, author: req.user.id },
-      { title, content },
-      { new: true }  // how and how all this
-    );
+    const data = JSON.parse(req.body.data);
 
-    if (!blog) return res.status(404).json({ error: "Blog not found" });
-    res.json(blog);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to update blog" });
-  }
-};
 
-// Delete a blog
-const deleteBlogs = async (req, res) => {
-  try {
-    const blog = await Blog.findOneAndDelete({
-      _id: req.params.id,
-      author: req.user.id,
+    let featuredImage = "";
+    if (req.file) {
+      try {
+        // Upload an image
+        const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+          folder: "blog-website",
+          resource_type: "auto",
+        });
+
+        featuredImage = uploadResult.secure_url;
+      } catch (error) {
+        console.error("Cloudinary upload error:", error);
+        return next(handleError(500, error.message || "Internal Server Error"));
+      }
+    }
+
+    // const encodedContent = encode(data.blogcontent);
+    // console.log("Encoded blogcontent:", encodedContent); // Debug log
+
+    const blog = await Blog.create({
+      author: data.author,
+      category: data.category,
+      title: data.title,
+      slug: data.slug,
+      featuredImage: featuredImage,
+      blogcontent: encode(data.blogcontent),
     });
 
-    if (!blog) return res.status(404).json({ error: "Blog not found" });
-    res.json({ message: "Blog deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to delete blog" });
+    res.status(200).json({
+      success: true,
+      message: "Blog created successfully.",
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
   }
-};
+}
 
-// module.exports = {
-//   createBlogs,
-//   getBlogs,
-//   updateBlogs,
-//   deleteBlogs,
-// };
-export  { createBlogs, getBlogs, updateBlogs, deleteBlogs };
+async function editBlog(req, res, next) {
+  try {
+    const { blogid } = req.params;
+    const blog = await Blog.findById(blogid).populate('category', 'name')
+    if (!blog) {
+      return next(handleError(404, "Data not found"));
+    }
+    res.status(200).json({
+      success: true,
+      blog,
+    });
+  } catch (error) {
+    next(handleError(500, error.message || "Internal server error"));
+  }
+}
+
+async function updateBlog(req, res, next) {
+  try {
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+}
+
+async function deleteBlog(req, res, next) {
+  try {
+    const { blogid } = req.params;
+    const blog = await Blog.findByIdAndDelete(blogid);
+    res.status(200).json({
+      success: true,
+      message: "BLog deleted successfully.",
+    });
+  } catch (error) {
+    next(handleError(500, error.message || "Internal server error"));
+  }
+}
+
+async function showAllBlog(req, res, next) {
+  try {
+    const blog = await Blog.find().populate('author', 'fullName').populate('category', 'name').sort({createdAt: -1}).lean().exec()
+    res.status(200).json({
+      blog
+    })
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+}
+
+export { createBlog, editBlog, updateBlog, deleteBlog, showAllBlog };

@@ -3,16 +3,20 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
 import { showToast } from "../../helpers/ShowToast";
-import { FaChevronDown } from "react-icons/fa";
 import { useFetch } from "../../hooks/UseFetch";
 import Dropzone from "react-dropzone";
 import Editor from "../../components/Editor";
+import { useSelector } from "react-redux";
+import LoadingSpinner from "../../components/Loading.jsx";
+import { useNavigate } from "react-router-dom";
+import { RouteBlog } from "../../helpers/RouteName.js";
 
 const AddCategory = () => {
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
-  // const [open, setOpen] = useState(false);
-  //   const [selected, setSelected] = useState(categories[0]);
+  const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
+
   const {
     data: categoryData,
     loading,
@@ -29,6 +33,7 @@ const AddCategory = () => {
     formState: { errors },
     setValue,
     watch,
+    reset,
   } = useForm();
 
   const handleFileSelection = (files) => {
@@ -44,22 +49,31 @@ const AddCategory = () => {
   };
 
   const onSubmit = async (values) => {
-    console.log(values);
-    // try {
-    //   const response = await axios.post(
-    //     `${import.meta.env.VITE_API_URL}/category/add`,
-    //     values,
-    //     { withCredentials: true },
-    //   );
-    //   reset();
-    //   showToast("success", response.data.message);
-    // } catch (error) {
-    //   showToast(
-    //     "error",
-    //     error.response?.data?.message ||
-    //       "Something went wrong, Please try again.",
-    //   );
-    // }
+    const newValues = { ...values, author: user._id };
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("data", JSON.stringify(newValues));
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/blog/add`,
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+      reset;
+      setFile();
+      setFilePreview();
+      showToast("success", response.data.message);
+      navigate(RouteBlog);
+    } catch (error) {
+      showToast(
+        "error",
+        error.response?.data?.message ||
+          "Error saving changes. Please try again.",
+      );
+    }
   };
 
   const categoryValue = watch("title");
@@ -69,6 +83,8 @@ const AddCategory = () => {
       setValue("slug", slug);
     }
   });
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="h-full w-full flex justify-center py-5 px-5">
@@ -138,7 +154,9 @@ const AddCategory = () => {
 
         {/* Profile */}
         <div className="flex flex-col">
-          <label htmlFor="slug" className="text-sm font-medium text-gray-700">
+          <label
+            htmlFor="featuredImage"
+            className="text-sm font-medium text-gray-700">
             Featured Image
           </label>
           <Dropzone
