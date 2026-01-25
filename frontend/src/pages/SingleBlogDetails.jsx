@@ -4,6 +4,7 @@ import { useFetch } from "../hooks/UseFetch";
 import { useParams } from "react-router-dom";
 import { decode } from "entities";
 import Comments from "../components/Comments";
+import CommentsList from "../components/CommentsList";
 
 const SingleBlogDetails = () => {
   const { blogSlug } = useParams();
@@ -68,8 +69,14 @@ const SingleBlogDetails = () => {
               {decode(blogData.blog.blogcontent)}
             </div>
 
+            {/* comments  */}
             <div>
               <Comments props={{blogid: blogData.blog._id}} />
+            </div>
+
+            {/* comment lists  */}
+            <div>
+              <CommentsList props={{blogid: blogData.blog._id}} />
             </div>
           </div>
 
