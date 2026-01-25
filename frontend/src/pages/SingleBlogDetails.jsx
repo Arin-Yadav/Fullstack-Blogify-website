@@ -3,6 +3,7 @@ import LoadingSpinner from "../components/Loading";
 import { useFetch } from "../hooks/UseFetch";
 import { useParams } from "react-router-dom";
 import { decode } from "entities";
+import Comments from "../components/Comments";
 
 const SingleBlogDetails = () => {
   const { blogSlug } = useParams();
@@ -10,7 +11,7 @@ const SingleBlogDetails = () => {
     `${import.meta.env.VITE_API_URL}/blog/get-blog/${blogSlug}`,
     {
       withCredentials: true,
-    }
+    },
   );
 
   if (loading) return <LoadingSpinner />;
@@ -27,7 +28,7 @@ const SingleBlogDetails = () => {
             </h1>
 
             {/* Author + Meta */}
-            <div className="flex items-center justify-between p-4 rounded-lg bg-amber-200 shadow-sm">
+            <div className="flex items-center justify-between p-4 rounded-lg shadow-sm">
               <div className="flex items-center gap-4">
                 <img
                   src={blogData.blog.author.avatar}
@@ -44,8 +45,12 @@ const SingleBlogDetails = () => {
                 </div>
               </div>
               <div className="flex gap-4 text-sm font-medium text-gray-700">
-                <button className="hover:text-blue-600 transition">👍 Like</button>
-                <button className="hover:text-green-600 transition">💬 Comment</button>
+                <button className="hover:text-blue-600 transition">
+                  👍 Like
+                </button>
+                <button className="hover:text-green-600 transition">
+                  💬 Comment
+                </button>
               </div>
             </div>
 
@@ -59,8 +64,12 @@ const SingleBlogDetails = () => {
             </div>
 
             {/* Blog Content */}
-            <div className="prose max-w-none prose-lg text-gray-800 leading-relaxed">
+            <div className="prose max-w-none prose-lg text-gray-800 leading-relaxed rounded-lg shadow-sm py-10">
               {decode(blogData.blog.blogcontent)}
+            </div>
+
+            <div>
+              <Comments props={{blogid: blogData.blog._id}} />
             </div>
           </div>
 

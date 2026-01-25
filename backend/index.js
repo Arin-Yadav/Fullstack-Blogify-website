@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import commentRoutes from './routes/commentRoutes.js'
 // import { checkForAuthentication } from "./middlewares/authMiddleware.js";
 
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/blog", blogRoutes);
+app.use("/api/comment", commentRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

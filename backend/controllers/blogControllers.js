@@ -1,7 +1,7 @@
 import cloudinary from "../config/cloudinary.js";
 import { handleError } from "../helpers/handleError.js";
 import Blog from "../models/blog.js";
-import { encode } from "entities";
+import { encode, decode } from "entities";
 
 async function createBlog(req, res, next) {
   try {
@@ -134,6 +134,8 @@ export const getBlog = async (req, res, next) => {
       .populate("category", "name slug")
       .lean()
       .exec();
+      
+
     res.status(200).json({
       blog,
     });

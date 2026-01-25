@@ -6,9 +6,6 @@ import { removeUser } from "../redux/slices/user.slice";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { FaRegUser } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoLogOutOutline } from "react-icons/io5";
-import { CiCamera } from "react-icons/ci";
 import axios from "axios";
 import { showToast } from "../helpers/ShowToast";
 
