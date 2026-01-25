@@ -67,5 +67,4 @@ async function updateUser(req, res, next) {
   }
 }
 
-
 export { getUser, updateUser };

@@ -23,3 +23,12 @@ export const RouteEditBlog = (blogid) => {
     } 
        return `/blog/edit/:blog_id`
 }
+
+export const RouteBlogDetails = (categorySlug, blogSlug) => {
+    if(!categorySlug || !blogSlug) {
+        return `/blog/:categorySlug/:blogSlug`
+    }
+    else {
+        return `/blog/${categorySlug}/${blogSlug}`
+    }
+}

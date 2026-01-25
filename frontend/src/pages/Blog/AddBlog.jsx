@@ -163,7 +163,9 @@ const AddCategory = () => {
             onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}>
             {({ getRootProps, getInputProps }) => (
               <section className="flex justify-center sm:justify-start w-full sm:w-auto">
-                <div {...getRootProps()} className="relative cursor-pointer">
+                <div
+                  {...getRootProps()}
+                  className="relative cursor-pointer overflow-hidden">
                   <input {...getInputProps()} />
                   <div className="flex justify-center items-center w-36 h-28 border-2 border-dashed mt-2 rounded object-cover">
                     <img src={filePreview} alt="image" />

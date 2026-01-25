@@ -85,7 +85,6 @@ async function updateBlog(req, res, next) {
       }
     }
     blog.featuredImage = featuredImage;
-  
 
     await blog.save();
 
@@ -115,7 +114,7 @@ async function showAllBlog(req, res, next) {
   try {
     const blog = await Blog.find()
       .populate("author", "fullName avatar")
-      .populate("category", "name")
+      .populate("category", "name slug")
       .sort({ createdAt: -1 })
       .lean()
       .exec();
@@ -126,5 +125,21 @@ async function showAllBlog(req, res, next) {
     return next(handleError(500, error.message || "Internal server error"));
   }
 }
+
+export const getBlog = async (req, res, next) => {
+  try {
+    const { blogSlug } = req.params;
+    const blog = await Blog.findOne({ slug: blogSlug })
+      .populate("author", "fullName avatar")
+      .populate("category", "name slug")
+      .lean()
+      .exec();
+    res.status(200).json({
+      blog,
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+};
 
 export { createBlog, editBlog, updateBlog, deleteBlog, showAllBlog };

@@ -1,15 +1,16 @@
 import React from "react";
 import Card from "./Card";
 import { useFetch } from "../hooks/UseFetch";
+import LoadingSpinner from "./Loading";
 
 const FeaturedPost = () => {
-  const { data: blogData } = useFetch(
+  const { data: blogData, loading } = useFetch(
     `${import.meta.env.VITE_API_URL}/blog/get-all`,
     {
       withCredentials: true,
     },
   );
-
+  if (loading) return <LoadingSpinner />;
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 pt-10">
       <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
