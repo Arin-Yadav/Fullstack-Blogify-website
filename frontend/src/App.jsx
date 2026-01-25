@@ -39,22 +39,16 @@ const App = () => {
           <Route path={RouteAddCategory} element={<AddCategory />} />
           <Route path={RouteEditCategory()} element={<EditCategory />} />
 
-          {/* Blog  */}
-          <Route path={RouteBlog} element={<BlogDetails />} />
-          <Route path={RouteAddBlog} element={<AddBlog />} />
-          <Route path={RouteEditBlog()} element={<EditBlog />} />
+          <Route element={<ProtectedRoute />}>
+            {/* Blog  */}
+            <Route path={RouteBlog} element={<BlogDetails />} />
+            <Route path={RouteAddBlog} element={<AddBlog />} />
+            <Route path={RouteEditBlog()} element={<EditBlog />} />
+          </Route>
         </Route>
 
         <Route path={RouteSignin} element={<Signin />} />
         <Route path={RouteSignup} element={<Signup />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
     </Router>
   );

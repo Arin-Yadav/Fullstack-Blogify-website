@@ -61,13 +61,15 @@ const EditCategory = () => {
     }
   }, [categoryData]);
 
-    if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="h-full w-full py-10 px-5">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-lg mx-auto bg-white shadow-lg rounded-xl p-6 space-y-4">
+        <h1 className="font-bold">Edit Category</h1>
+
         {/* Name */}
         <div className="flex flex-col">
           <label htmlFor="name" className="text-sm font-medium text-gray-700">

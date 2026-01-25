@@ -17,6 +17,7 @@
     "axios": "^1.13.2",
     "ckeditor5": "^47.4.0",
     "dayjs": "^1.11.19",
+    "entities": "^7.0.1",
     "lucide-react": "^0.562.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

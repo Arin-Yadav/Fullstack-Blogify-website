@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import DesktopUserProfile from "./DesktopUserProfile";
@@ -6,9 +6,6 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
-  // console.log(user.user) // to check user data
-
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav className="sticky top-0 z-10 w-full h-16 bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 shadow-sm flex justify-between items-center">
@@ -45,43 +42,6 @@ const Navbar = () => {
           <DesktopUserProfile user={user.user} />
         )}
       </ul>
-      {/* Mobile Menu Icon */}
-      <button
-        className="sm:hidden cursor-pointer"
-        onClick={() => setMobileOpen(!mobileOpen)}>
-        {mobileOpen ? (
-          <IoCloseOutline className="w-6 h-6" />
-        ) : (
-          <IoMenuOutline className="w-6 h-6" />
-        )}
-      </button>
-      {/* Mobile Dropdown */}
-      {mobileOpen && (
-        <div className="absolute top-20 left-0 w-full bg-white border-t border-gray-200 shadow-lg sm:hidden z-20">
-          <ul className="flex flex-col items-start gap-2 px-6 py-4">
-            <li className="w-full body-font text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300 cursor-pointer">
-              Home
-            </li>
-            <li className="w-full body-font text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300 cursor-pointer">
-              Archive
-            </li>
-            <li className="w-full body-font text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#0f766e] transition-colors duration-300 cursor-pointer">
-              Authors
-            </li>
-            {!user.isLoggedIn ? (
-              <Link
-                to="/signin"
-                className="w-full text-center body-font font-semibold cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white px-5 py-2 rounded-3xl transition-transform hover:scale-105">
-                Sign in
-              </Link>
-            ) : (
-              <button className="w-full body-font text-sm font-medium bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
-                Logout
-              </button>
-            )}
-          </ul>
-        </div>
-      )}
     </nav>
   );
 };

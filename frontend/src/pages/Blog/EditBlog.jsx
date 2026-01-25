@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import LoadingSpinner from "../../components/Loading.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { RouteBlog } from "../../helpers/RouteName.js";
+import { decode } from "entities";
 
 const EditBlog = () => {
   const { blog_id } = useParams();
@@ -31,9 +32,8 @@ const EditBlog = () => {
     {
       withCredentials: true,
     },
+    [blog_id],
   );
-
-    console.log(blogData);
 
   const {
     register,
@@ -57,14 +57,13 @@ const EditBlog = () => {
   };
 
   const onSubmit = async (values) => {
-    const newValues = { ...values, author: user._id };
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("data", JSON.stringify(newValues));
+    formData.append("data", JSON.stringify(values));
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/blog/add`,
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/blog/update/${blog_id}`,
         formData,
         {
           withCredentials: true,
@@ -84,6 +83,16 @@ const EditBlog = () => {
     }
   };
 
+  useEffect(() => {
+    if (blogData) {
+      setFilePreview(blogData.blog.featuredImage);
+      setValue("category", blogData.blog.category._id);
+      setValue("title", blogData.blog.title);
+      setValue("slug", blogData.blog.slug);
+      setValue("blogcontent", decode(blogData.blog.blogcontent));
+    }
+  }, [blogData]);
+
   const categoryValue = watch("title");
   useEffect(() => {
     if (categoryValue) {
@@ -99,6 +108,7 @@ const EditBlog = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className=" bg-white shadow-lg rounded-xl p-6 space-y-2">
+        <h1 className="font-bold">Edit Blog</h1>
         {/* Select category  */}
         <div className="w-full mx-auto">
           <label
@@ -108,7 +118,6 @@ const EditBlog = () => {
           </label>
           <select
             id="options"
-            defaultValue=""
             onChange={(e) => setValue("category", e.target.value)}
             className="block w-full rounded-md border border-gray-300 shadow-sm  focus:border-indigo-500 focus:ring-indigo-500  sm:text-sm p-2 bg-white cursor-pointer  max-h-40 overflow-y-auto">
             <option value="" disabled>
@@ -160,7 +169,7 @@ const EditBlog = () => {
           )}
         </div>
 
-        {/* Profile */}
+        {/* Featured Image */}
         <div className="flex flex-col">
           <label
             htmlFor="featuredImage"
@@ -194,7 +203,10 @@ const EditBlog = () => {
             {...register("blogcontent", {
               required: "Blog content is required",
             })}>
-            <Editor props={{ initialData: "" }} onChange={handleEditorData} />
+            <Editor
+              props={{ initialData: blogData?.blog.blogcontent }}
+              onChange={handleEditorData}
+            />
           </div>
           {errors.blogcontent && (
             <p className="text-xs text-red-500 mt-1">

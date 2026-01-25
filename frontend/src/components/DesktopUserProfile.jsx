@@ -58,7 +58,6 @@ export default function DesktopUserProfile() {
           <div className="py-1">
             <MenuItem>
               <Link
-                href="#"
                 className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
                 <div className="flex flex-col">
                   <span className="font-medium">{user.user.fullName}</span>
@@ -74,23 +73,6 @@ export default function DesktopUserProfile() {
                   <FaRegUser />
                   Profile
                 </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link
-                  href="#"
-                  className="flex gap-2 items-center  px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
-                  <IoSettingsOutline />
-                  Settings
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <button
-                  type="submit"
-                  onClick={handleSignout}
-                  className="flex gap-2 items-center  w-full px-4 py-2 text-left text-sm text-white bg-red-500 hover:bg-red-600 hover:text-white rounded cursor-pointer">
-                  <IoLogOutOutline className="w-5 h-5" />
-                  Sign out
-                </button>
               </MenuItem>
             </div>
           </div>

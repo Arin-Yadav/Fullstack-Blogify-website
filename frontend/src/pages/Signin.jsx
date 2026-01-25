@@ -9,6 +9,7 @@ import { showToast } from "../helpers/ShowToast";
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -21,15 +22,15 @@ const Signin = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/signin`,
         values,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       dispatch(setUser(response.data.user));
-      navigate(RouteIndex);
+      navigate(from, { replace: true });
       showToast("success", "Signed in successfully!");
     } catch (error) {
       showToast(
         "error",
-        error.response?.data?.message || "Sign in failed. Please try again."
+        error.response?.data?.message || "Sign in failed. Please try again.",
       );
     }
   };
