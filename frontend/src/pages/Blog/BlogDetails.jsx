@@ -33,7 +33,6 @@ const BlogDetails = () => {
       showToast("error", "Data not deleted");
     }
   };
-  console.log(blogData)
 
   if (loading) return <LoadingSpinner />;
   return (

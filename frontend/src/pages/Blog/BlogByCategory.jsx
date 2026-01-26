@@ -1,14 +1,16 @@
 import React from "react";
-import Card from "./Card";
-import { useFetch } from "../hooks/UseFetch";
-import LoadingSpinner from "./Loading";
+import { useParams } from "react-router-dom";
+import { useFetch } from "../../hooks/UseFetch";
+import LoadingSpinner from "../../components/Loading";
+import Card from "../../components/Card";
 
-const FeaturedPost = () => {
+const BlogByCategory = () => {
+  const { categorySlug } = useParams();
   const { data: blogData, loading } = useFetch(
-    `${import.meta.env.VITE_API_URL}/blog/get-all`,
+    `${import.meta.env.VITE_API_URL}/blog/get-blog-by-category/${categorySlug}`,
     { withCredentials: true },
+    [categorySlug],
   );
-  // console.log(blogData)
 
   if (loading) return <LoadingSpinner />;
   return (
@@ -21,11 +23,11 @@ const FeaturedPost = () => {
         {blogData && blogData?.blog?.length > 0 ? (
           blogData.blog.map((blog) => <Card blog={blog} key={blog._id} />)
         ) : (
-          <div>Data Not Found</div>
+          <div>Data not found</div>
         )}
       </div>
     </section>
   );
 };
 
-export default FeaturedPost;
+export default BlogByCategory;

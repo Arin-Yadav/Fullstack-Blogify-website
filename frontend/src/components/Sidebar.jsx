@@ -6,6 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 import {
   RouteBlog,
+  RouteBlogByCategory,
   RouteCategoryDetails,
   RouteIndex,
 } from "../helpers/RouteName";
@@ -149,7 +150,7 @@ export default function Sidebar() {
                 categoryData.category.map((category) => (
                   <Link
                     key={category._id}
-                    to={`${RouteCategoryDetails}/${category._id}`}
+                    to={RouteBlogByCategory(category.slug)}
                     className="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
                     <span className="flex items-center gap-2">
                       <FaRegCircle className="h-2 w-2" /> {category.name}

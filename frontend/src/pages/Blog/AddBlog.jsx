@@ -25,8 +25,6 @@ const AddCategory = () => {
     withCredentials: true,
   });
 
-  //   console.log(categoryData);
-
   const {
     register,
     handleSubmit,

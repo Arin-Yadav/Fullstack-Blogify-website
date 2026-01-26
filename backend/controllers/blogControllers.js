@@ -63,7 +63,6 @@ async function updateBlog(req, res, next) {
     const { blogid } = req.params;
 
     const data = JSON.parse(req.body.data);
-    console.log(data);
     const blog = await Blog.findById(blogid);
     blog.category = data.category;
     blog.title = data.title;
@@ -164,6 +163,27 @@ export const getRelatedBlog = async (req, res, next) => {
       .exec();
     res.status(200).json({
       relatedBlog,
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+};
+
+export const getBlogByCategory = async (req, res, next) => {
+  try {
+    const { categorySlug } = req.params;
+    const categoryData = await Category.findOne({ slug: categorySlug });
+    if (!categoryData) {
+      return next(404, "Data not found");
+    }
+    const categoryId = categoryData._id;
+    const blog = await Blog.find({ category: categoryId })
+      .populate("author", "fullName avatar")
+      .populate("category", "name slug")
+      .lean()
+      .exec();
+    res.status(200).json({
+      blog,
     });
   } catch (error) {
     return next(handleError(500, error.message || "Internal server error"));
