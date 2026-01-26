@@ -2,6 +2,7 @@ import cloudinary from "../config/cloudinary.js";
 import { handleError } from "../helpers/handleError.js";
 import Blog from "../models/blog.js";
 import { encode, decode } from "entities";
+import Category from "../models/category.js";
 
 async function createBlog(req, res, next) {
   try {
@@ -134,7 +135,6 @@ export const getBlog = async (req, res, next) => {
       .populate("category", "name slug")
       .lean()
       .exec();
-      
 
     res.status(200).json({
       blog,
@@ -144,4 +144,30 @@ export const getBlog = async (req, res, next) => {
   }
 };
 
-export { createBlog, editBlog, updateBlog, deleteBlog, showAllBlog };
+export const getRelatedBlog = async (req, res, next) => {
+  try {
+    const { categorySlug, blogSlug } = req.params;
+    // console.log("category slug: ", categorySlug);
+    const categoryData = await Category.findOne({ slug: categorySlug });
+    // console.log("category data: ", categoryData);
+    if (!categoryData) {
+      return next(404, "Data not found");
+    }
+    const categoryId = categoryData._id;
+    // console.log("category id: ", categoryId);
+
+    const relatedBlog = await Blog.find({
+      category: categoryId,
+      slug: { $ne: blogSlug },
+    })
+      .lean()
+      .exec();
+    res.status(200).json({
+      relatedBlog,
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+};
+
+export { createBlog, editBlog, updateBlog, deleteBlog, showAllBlog }; // no need to add getRelatedBlog and getBlog cuz find out why

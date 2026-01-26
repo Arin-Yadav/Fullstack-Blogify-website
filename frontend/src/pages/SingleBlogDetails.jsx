@@ -4,15 +4,14 @@ import { useFetch } from "../hooks/UseFetch";
 import { useParams } from "react-router-dom";
 import { decode } from "entities";
 import Comments from "../components/Comments";
-import CommentsList from "../components/CommentsList";
+import RelatedBlog from "../components/RelatedBlog";
 
 const SingleBlogDetails = () => {
-  const { blogSlug } = useParams();
+  const { blogSlug, categorySlug } = useParams();
   const { data: blogData, loading } = useFetch(
     `${import.meta.env.VITE_API_URL}/blog/get-blog/${blogSlug}`,
-    {
-      withCredentials: true,
-    },
+    { withCredentials: true },
+    [blogSlug, categorySlug],
   );
 
   if (loading) return <LoadingSpinner />;
@@ -22,14 +21,14 @@ const SingleBlogDetails = () => {
       {blogData?.blog && (
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Main Blog Section */}
-          <div className="lg:w-2/3 w-full space-y-6">
+          <div className="lg:w-2/3 w-full space-y-8">
             {/* Title */}
-            <h1 className="font-bold text-2xl md:text-4xl text-gray-900">
+            <h1 className="font-bold text-3xl md:text-2xl text-gray-900 leading-tight">
               {blogData.blog.title}
             </h1>
 
             {/* Author + Meta */}
-            <div className="flex items-center justify-between p-4 rounded-lg shadow-sm">
+            <div className="flex items-center justify-between p-4 rounded-lg shadow-md bg-white">
               <div className="flex items-center gap-4">
                 <img
                   src={blogData.blog.author.avatar}
@@ -60,32 +59,26 @@ const SingleBlogDetails = () => {
               <img
                 src={blogData.blog.featuredImage}
                 alt="blog"
-                className="w-full h-auto object-cover"
+                className="w-full h-96 object-contain"
               />
             </div>
 
             {/* Blog Content */}
-            <div className="prose max-w-none prose-lg text-gray-800 leading-relaxed rounded-lg shadow-sm py-10">
+            <div className="prose max-w-none prose-lg text-gray-800 leading-relaxed rounded-lg shadow-sm bg-white p-6">
               {decode(blogData.blog.blogcontent)}
             </div>
 
-            {/* comments  */}
+            {/* Comments */}
             <div>
-              <Comments props={{blogid: blogData.blog._id}} />
-            </div>
-
-            {/* comment lists  */}
-            <div>
-              <CommentsList props={{blogid: blogData.blog._id}} />
+              <Comments props={{ blogid: blogData.blog._id }} />
             </div>
           </div>
 
           {/* Sidebar Section */}
           <div className="lg:w-1/3 w-full border-t-2 lg:border-t-0 lg:border-l-2 p-4">
-            <h2 className="font-semibold text-lg mb-4">Related Posts</h2>
-            <p className="text-gray-600 text-sm">
-              You can show related blogs, categories, or ads here.
-            </p>
+            <RelatedBlog
+              props={{ category: categorySlug, blogSlug: blogSlug }}
+            />
           </div>
         </div>
       )}

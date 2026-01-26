@@ -1,5 +1,5 @@
 import express from 'express'
-import { createBlog, deleteBlog, editBlog, getBlog, showAllBlog, updateBlog } from '../controllers/blogControllers.js'
+import { createBlog, deleteBlog, editBlog, getBlog, getRelatedBlog, showAllBlog, updateBlog } from '../controllers/blogControllers.js'
 import { upload } from "../config/multer.js";
 
 const router = express()
@@ -10,5 +10,6 @@ router.put('/update/:blogid', upload.single('file'), updateBlog)
 router.delete('/delete/:blogid', deleteBlog)
 router.get('/get-all', showAllBlog)
 router.get('/get-blog/:blogSlug', getBlog)
+router.get('/get-related-blog/:categorySlug/:blogSlug', getRelatedBlog)
 
 export default router
