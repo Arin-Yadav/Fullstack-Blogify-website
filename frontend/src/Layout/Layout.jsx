@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer";
 
 const Layout = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div>
-      <Navbar />
+      <Navbar
+        isSidebarOpen={isSidebarOpen} //false
+        setIsSidebarOpen={setIsSidebarOpen} //false
+      />
       <div className="flex">
-        <Sidebar />
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
         <main className="flex-1">
           <Outlet />
         </main>

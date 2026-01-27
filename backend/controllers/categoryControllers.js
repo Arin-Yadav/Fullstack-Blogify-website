@@ -4,9 +4,12 @@ import Category from "../models/category.js";
 async function addCategory(req, res, next) {
   try {
     const { name, slug } = req.body;
+    const role = req.user.role;
+    console.log(role)
     const category = await Category.create({
       name,
       slug,
+      role,
     });
 
     res.status(200).json({

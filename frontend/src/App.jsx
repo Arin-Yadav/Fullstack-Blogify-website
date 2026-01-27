@@ -34,6 +34,7 @@ import BlogByCategory from "./pages/Blog/BlogByCategory";
 import SearchResult from "./pages/SearchResult";
 import CommentsPage from "./pages/CommentsPage";
 import Users from "./pages/Users";
+import AdminRouteProtection from "./components/AdminRouteProtection";
 
 const App = () => {
   return (
@@ -41,25 +42,25 @@ const App = () => {
       <Routes>
         <Route path={RouteIndex} element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path={RouteProfile} element={<Profile />} />
-
-          {/* Blog Category */}
-          <Route path={RouteCategoryDetails} element={<CategoryDetails />} />
-          <Route path={RouteAddCategory} element={<AddCategory />} />
-          <Route path={RouteEditCategory()} element={<EditCategory />} />
 
           <Route element={<ProtectedRoute />}>
-            {/* Blog  */}
+            <Route path={RouteProfile} element={<Profile />} />
             <Route path={RouteBlog} element={<BlogDetails />} />
             <Route path={RouteAddBlog} element={<AddBlog />} />
             <Route path={RouteEditBlog()} element={<EditBlog />} />
+            <Route path={RouteComments} element={<CommentsPage />} />
           </Route>
+
+          <Route element={<AdminRouteProtection />}>
+            <Route path={RouteUsers} element={<Users />} />
+            <Route path={RouteCategoryDetails} element={<CategoryDetails />} />
+            <Route path={RouteAddCategory} element={<AddCategory />} />
+            <Route path={RouteEditCategory()} element={<EditCategory />} />
+          </Route>
+
           <Route path={RouteBlogDetails()} element={<SingleBlogDetails />} />
           <Route path={RouteBlogByCategory()} element={<BlogByCategory />} />
           <Route path={RouteSearch()} element={<SearchResult />} />
-
-          <Route path={RouteComments} element={<CommentsPage />} />
-          <Route path={RouteUsers} element={<Users />} />
         </Route>
 
         <Route path={RouteSignin} element={<Signin />} />

@@ -74,6 +74,7 @@ async function handleSignIn(req, res, next) {
         fullName: user.fullName,
         email: user.email,
         avatar: user.avatar,
+        role: user.role,
       },
       process.env.JWT_SECRET,
     );

@@ -3,12 +3,11 @@ import { FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="w-full py-12 px-6 border-t-2">
+    <footer className="w-full py-10 px-6 border-t-2">
       <div className="max-w-7xl mx-auto">
-        {/* <!-- Responsive grid --> */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* <!-- About Section --> */}
-          <div className="md:col-span-2 lg:col-span-2 text-center md:text-left">
+          <div className="md:col-span-2 lg:col-span-3 text-center md:text-left">
             <h4 className="heading-font text-2xl font-bold mb-4">
               About ThinkSpace
             </h4>
@@ -33,36 +32,6 @@ const Footer = () => {
                 <FaLinkedinIn />
               </a>
             </div>
-          </div>
-
-          {/* <!-- Quick Links --> */}
-          <div className="text-center">
-            <h5 className="body-font text-sm font-bold mb-4 uppercase tracking-wider">
-              Quick Links
-            </h5>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  className="body-font text-base hover:opacity-70 transition-opacity">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="body-font text-base hover:opacity-70 transition-opacity">
-                  Advertise
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="body-font text-base hover:opacity-70 transition-opacity">
-                  Careers
-                </a>
-              </li>
-            </ul>
           </div>
 
           {/* <!-- Resources --> */}

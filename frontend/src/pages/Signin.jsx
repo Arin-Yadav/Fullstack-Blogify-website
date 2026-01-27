@@ -5,11 +5,11 @@ import { RouteIndex, RouteSignup } from "../helpers/RouteName";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/user.slice";
 import { showToast } from "../helpers/ShowToast";
+import { IoHomeOutline } from "react-icons/io5";
 
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -25,7 +25,7 @@ const Signin = () => {
         { withCredentials: true },
       );
       dispatch(setUser(response.data.user));
-      navigate(from, { replace: true });
+      navigate(RouteIndex)
       showToast("success", "Signed in successfully!");
     } catch (error) {
       showToast(
@@ -40,6 +40,12 @@ const Signin = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4">
+          <h2 className="flex items-center justify-end">
+            <Link to={RouteIndex} className="cursor-pointer flex items-center gap-1 hover:text-blue-500 hover:underline">
+            <IoHomeOutline />
+              Back to Home
+            </Link>
+          </h2>
         <h2 className="text-2xl font-bold text-center text-gray-800">
           Sign In
         </h2>

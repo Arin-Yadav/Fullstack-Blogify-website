@@ -5,7 +5,7 @@ import LoadingSpinner from "./Loading";
 
 const FeaturedPost = () => {
   const { data: blogData, loading } = useFetch(
-    `${import.meta.env.VITE_API_URL}/blog/get-all`,
+    `${import.meta.env.VITE_API_URL}/blog/blogs`,
     { withCredentials: true },
   );
 

@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 const CommentsPage = () => {
   const [freshdata, setFreshdata] = useState(false);
 
-  const { data, loading, _error } = useFetch(
+  const { data, loading } = useFetch(
     `${import.meta.env.VITE_API_URL}/comment/get-all-comments`,
     { withCredentials: true },
     [freshdata],

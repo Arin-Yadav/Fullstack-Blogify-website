@@ -3,20 +3,24 @@ import Comment from "../models/comment.js";
 
 async function createComment(req, res, next) {
   try {
-    const { author, blogid, comment } = req.body;
-    const comments = await Comment.create({
-      author: author,
-      blogid: blogid,
-      comment: comment,
-    });
+    const { blogid, comment } = req.body;
+    const author = req.user._id; // comes from middleware
 
-    res.status(200).json({
+    if (!author || !blogid || !comment) {
+      const err = new Error("Missing required fields");
+      err.statusCode = 400;
+      return next(err);
+    }
+
+    const newComment = await Comment.create({ author, blogid, comment });
+
+    res.status(201).json({
       success: true,
-      message: "Comment Submitted.",
-      comment: comments,
+      message: "Comment submitted.",
+      comment: newComment,
     });
   } catch (error) {
-    next(handleError(500, error.message || "Internal server error"));
+    next(error);
   }
 }
 
@@ -39,10 +43,19 @@ async function getComments(req, res, next) {
 
 async function getAllComments(req, res, next) {
   try {
-    const comments = await Comment.find()
-      .sort({ createdAt: -1 })
-      .populate("blogid", "title")
-      .populate("author", "fullName");
+    const user = req.user;
+    let comments;
+    if (user.role === "admin") {
+      comments = await Comment.find()
+        .sort({ createdAt: -1 })
+        .populate("blogid", "title")
+        .populate("author", "fullName");
+    } else {
+      comments = await Comment.find({ author: user._id })
+        .sort({ createdAt: -1 })
+        .populate("blogid", "title")
+        .populate("author", "fullName");
+    }
 
     res.status(200).json({
       comments,

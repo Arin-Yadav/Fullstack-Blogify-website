@@ -27,7 +27,6 @@ const Comments = ({ props }) => {
       const newValues = {
         ...values,
         blogid: props.blogid,
-        author: user.user._id,
       };
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/comment/create`,

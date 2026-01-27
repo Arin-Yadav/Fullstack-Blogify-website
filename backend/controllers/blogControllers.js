@@ -112,12 +112,24 @@ async function deleteBlog(req, res, next) {
 
 async function showAllBlog(req, res, next) {
   try {
-    const blog = await Blog.find()
-      .populate("author", "fullName avatar")
-      .populate("category", "name slug")
-      .sort({ createdAt: -1 })
-      .lean()
-      .exec();
+    const user = req.user;
+    let blog;
+    if (user.role === "admin") {
+       blog = await Blog.find()
+        .populate("author", "fullName avatar")
+        .populate("category", "name slug")
+        .sort({ createdAt: -1 })
+        .lean()
+        .exec();
+    } else {
+         blog = await Blog.find({ author: user._id })
+        .populate("author", "fullName avatar")
+        .populate("category", "name slug")
+        .sort({ createdAt: -1 })
+        .lean()
+        .exec();
+    }
+
     res.status(200).json({
       blog,
     });
@@ -193,8 +205,8 @@ export const getBlogByCategory = async (req, res, next) => {
 
 export const search = async (req, res, next) => {
   try {
-    const {q} = req.query
-    const blog = await Blog.find({ title: {$regex: q, $options: 'i'} })
+    const { q } = req.query;
+    const blog = await Blog.find({ title: { $regex: q, $options: "i" } })
       .populate("author", "fullName avatar")
       .populate("category", "name slug")
       .lean()
@@ -207,4 +219,29 @@ export const search = async (req, res, next) => {
   }
 };
 
-export { createBlog, editBlog, updateBlog, deleteBlog, showAllBlog }; // no need to add getRelatedBlog and getBlog cuz find out why
+async function getAllBlogs(req, res, next) {
+  try {
+    const user = req.user;
+    const blog = await Blog.find()
+      .populate("author", "fullName avatar")
+      .populate("category", "name slug")
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+
+    res.status(200).json({
+      blog,
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+}
+
+export {
+  createBlog,
+  editBlog,
+  updateBlog,
+  deleteBlog,
+  showAllBlog,
+  getAllBlogs,
+}; // no need to add getRelatedBlog and getBlog cuz find out why

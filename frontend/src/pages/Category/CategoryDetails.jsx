@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
-import { RouteAddCategory, RouteDeleteCategory, RouteEditCategory } from "../../helpers/RouteName";
+import {
+  RouteAddCategory,
+  RouteDeleteCategory,
+  RouteEditCategory,
+} from "../../helpers/RouteName";
 import { useFetch } from "../../hooks/UseFetch.js";
 import LoadingSpinner from "../../components/Loading.jsx";
 import { deleteData } from "../../helpers/DeleteData.js";
@@ -7,26 +11,31 @@ import { showToast } from "../../helpers/ShowToast.js";
 import { useState } from "react";
 
 const CategoryDetails = () => {
-  const [freshdata, setFreshdata] = useState(false)
+  const [freshdata, setFreshdata] = useState(false);
 
   const {
     data: categoryData,
     loading,
     _error,
-  } = useFetch(`${import.meta.env.VITE_API_URL}/category/all-category`, {
-    withCredentials: true,
-  }, [freshdata]);
+  } = useFetch(
+    `${import.meta.env.VITE_API_URL}/category/all-category`,
+    {
+      withCredentials: true,
+    },
+    [freshdata],
+  );
 
   const handleDelete = (id) => {
-      const response = deleteData(`${import.meta.env.VITE_API_URL}/category/delete/${id}`)
-      if(response) {
-        setFreshdata(!freshdata)
-        showToast('success', "Data deleted")
-      }
-      else {
-        showToast('error', "Data not deleted")
-      }
-  }
+    const response = deleteData(
+      `${import.meta.env.VITE_API_URL}/category/delete/${id}`,
+    );
+    if (response) {
+      setFreshdata(!freshdata);
+      showToast("success", "Data deleted");
+    } else {
+      showToast("error", "Data not deleted");
+    }
+  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -59,30 +68,28 @@ const CategoryDetails = () => {
 
           <tbody className="divide-y divide-gray-200">
             {categoryData && categoryData.category.length > 0 ? (
-                categoryData?.category?.map((category) => (
-                  <tr key={category._id} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 text-sm text-gray-800">
-                      {category.name}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-500">
-                      {category.slug}
-                    </td>
-                    <td className="px-4 py-2">
-                      <div className="flex gap-2">
-                        <button className="px-3 py-1 text-sm text-blue-600 border border-blue-200 rounded hover:bg-blue-50">
-                          <Link to={RouteEditCategory(category._id)}>
-                          Edit
-                          </Link>
-                        </button>
-                        <button 
+              categoryData?.category?.map((category) => (
+                <tr key={category._id} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {category.name}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-500">
+                    {category.slug}
+                  </td>
+                  <td className="px-4 py-2">
+                    <div className="flex gap-2">
+                      <button className="px-3 py-1 text-sm text-blue-600 border border-blue-200 rounded hover:bg-blue-50">
+                        <Link to={RouteEditCategory(category._id)}>Edit</Link>
+                      </button>
+                      <button
                         onClick={() => handleDelete(category._id)}
                         className="px-3 py-1 text-sm text-red-600 border border-red-200 rounded hover:bg-red-50">
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
             ) : (
               <tr>
                 <td>

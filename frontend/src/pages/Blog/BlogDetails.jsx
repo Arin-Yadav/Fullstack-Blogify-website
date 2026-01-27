@@ -13,7 +13,6 @@ const BlogDetails = () => {
   const {
     data: blogData,
     loading,
-    _error,
   } = useFetch(
     `${import.meta.env.VITE_API_URL}/blog/get-all`,
     {
@@ -22,8 +21,8 @@ const BlogDetails = () => {
     [freshdata],
   );
 
-  const handleDelete = (id) => {
-    const response = deleteData(
+  const handleDelete = async (id) => {
+    const response = await deleteData(
       `${import.meta.env.VITE_API_URL}/blog/delete/${id}`,
     );
     if (response) {
@@ -97,7 +96,7 @@ const BlogDetails = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(blog._id)}
-                        className="px-3 py-1 text-sm text-red-600 border border-red-200 rounded hover:bg-red-50">
+                        className="px-3 py-1 text-sm text-red-600 border border-red-200 rounded hover:bg-red-50 cursor-pointer">
                         Delete
                       </button>
                     </div>
