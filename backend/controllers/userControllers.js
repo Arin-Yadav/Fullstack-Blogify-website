@@ -67,4 +67,33 @@ async function updateUser(req, res, next) {
   }
 }
 
-export { getUser, updateUser };
+async function getAllUsers(req, res, next) {
+  try {
+    const users = await User.find()
+      .sort({ createdAt: -1 })
+
+    res.status(200).json({
+      users,
+    });
+  } catch (error) {
+    next(handleError(500, error.message || "Internal server error"));
+  }
+}
+
+async function deleteUser(req, res, next) {
+  try {
+    const { userid } = req.params;
+    const user = await User.findByIdAndDelete(userid);
+    if (!user) {
+      return next(handleError(404, "User not found"));
+    }
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal Server Error"));
+  }
+}
+
+export { getUser, updateUser, deleteUser, getAllUsers };

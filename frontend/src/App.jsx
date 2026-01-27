@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Signin from "./pages/Signin";
 import {
@@ -12,12 +11,15 @@ import {
   RouteBlogByCategory,
   RouteBlogDetails,
   RouteCategoryDetails,
+  RouteComments,
   RouteEditBlog,
   RouteEditCategory,
   RouteIndex,
   RouteProfile,
+  RouteSearch,
   RouteSignin,
   RouteSignup,
+  RouteUsers,
 } from "./helpers/RouteName";
 import Layout from "./Layout/Layout";
 import Profile from "./pages/Profile";
@@ -29,6 +31,9 @@ import AddBlog from "./pages/Blog/AddBlog";
 import EditBlog from "./pages/Blog/EditBlog";
 import SingleBlogDetails from "./pages/SingleBlogDetails";
 import BlogByCategory from "./pages/Blog/BlogByCategory";
+import SearchResult from "./pages/SearchResult";
+import CommentsPage from "./pages/CommentsPage";
+import Users from "./pages/Users";
 
 const App = () => {
   return (
@@ -51,6 +56,10 @@ const App = () => {
           </Route>
           <Route path={RouteBlogDetails()} element={<SingleBlogDetails />} />
           <Route path={RouteBlogByCategory()} element={<BlogByCategory />} />
+          <Route path={RouteSearch()} element={<SearchResult />} />
+
+          <Route path={RouteComments} element={<CommentsPage />} />
+          <Route path={RouteUsers} element={<Users />} />
         </Route>
 
         <Route path={RouteSignin} element={<Signin />} />

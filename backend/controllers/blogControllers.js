@@ -184,6 +184,23 @@ export const getBlogByCategory = async (req, res, next) => {
       .exec();
     res.status(200).json({
       blog,
+      categoryData,
+    });
+  } catch (error) {
+    return next(handleError(500, error.message || "Internal server error"));
+  }
+};
+
+export const search = async (req, res, next) => {
+  try {
+    const {q} = req.query
+    const blog = await Blog.find({ title: {$regex: q, $options: 'i'} })
+      .populate("author", "fullName avatar")
+      .populate("category", "name slug")
+      .lean()
+      .exec();
+    res.status(200).json({
+      blog,
     });
   } catch (error) {
     return next(handleError(500, error.message || "Internal server error"));

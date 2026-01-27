@@ -8,7 +8,9 @@ import {
   RouteBlog,
   RouteBlogByCategory,
   RouteCategoryDetails,
+  RouteComments,
   RouteIndex,
+  RouteUsers,
 } from "../helpers/RouteName";
 import { GrBlog } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
@@ -129,13 +131,13 @@ export default function Sidebar() {
           </Link>
 
           <Link
-            to={RouteIndex}
+            to={RouteUsers}
             className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
             <LuUsers className="mr-2" /> Users
           </Link>
 
           <Link
-            to={RouteIndex}
+            to={RouteComments}
             className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
             <FaRegComments className="mr-2" /> Comments
           </Link>
