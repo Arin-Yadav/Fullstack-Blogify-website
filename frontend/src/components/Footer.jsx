@@ -1,5 +1,6 @@
 import React from "react";
-import { FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -16,21 +17,18 @@ const Footer = () => {
               our community of passionate writers and curious readers.
             </p>
             <div className="flex justify-center md:justify-start gap-4">
-              <a
-                href="#"
-                className="text-2xl hover:opacity-70 transition-opacity hover:text-blue-500">
-                <FaTwitter />
-              </a>
-              <a
-                href="#"
-                className="text-2xl hover:opacity-70 transition-opacity hover:text-pink-500">
-                <FaInstagram />
-              </a>
-              <a
-                href="#"
+              <Link
+              target="_blank"
+                to={'https://www.linkedin.com/in/arinyadav/'}
                 className="text-2xl hover:opacity-70 transition-opacity hover:text-blue-500">
                 <FaLinkedinIn />
-              </a>
+              </Link>
+              <Link
+              target="_blank"
+                to={'https://github.com/Arin-Yadav'}
+                className="text-2xl hover:opacity-70 transition-opacity hover:text-pink-500">
+                <FaGithub />
+              </Link>
             </div>
           </div>
 

@@ -30,7 +30,7 @@ const CommentsPage = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] p-5">
+    <div className="min-h-[calc(100vh-4rem)] max-w-screen p-5">
       {/* Category tables */}
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-200 divide-y divide-gray-200 mt-5">

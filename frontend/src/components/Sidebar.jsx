@@ -49,25 +49,6 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
       {/* Sidebar */}
       <aside
         className={`fixed md:sticky top-16 md:top-16 left-0 h-full md:h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 shadow-md flex flex-col transform transition-transform duration-300 z-40 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
-        <div className="md:hidden flex px-5 items-center gap-2 py-2 border-b border-gray-200">
-          {user.user?.avatar ? (
-            <Link to={RouteProfile}>
-              <img
-                src={user.user.avatar}
-                alt="avatar"
-                className="w-20 h-7 rounded-full object-cover"
-              />
-            </Link>
-          ) : (
-            <div className="flex items-center gap-2">
-              <FaUserCircle className="w-8 h-8 text-gray-500" />
-              <span className="flex-1 text-left font-medium text-gray-700 truncate">
-                {user.user?.fullName || "Guest"}
-              </span>
-            </div>
-          )}
-        </div>
-
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           <Link

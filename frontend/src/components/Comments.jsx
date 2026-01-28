@@ -49,7 +49,7 @@ const Comments = ({ props }) => {
     <div className="mt-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white shadow-lg rounded-xl p-6 space-y-4">
+        className="p-6 space-y-4">
         {/* Comment */}
         <div>
           <label className="block text-sm font-medium text-gray-700">

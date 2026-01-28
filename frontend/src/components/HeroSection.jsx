@@ -1,12 +1,14 @@
 import React from "react";
 import SearchBox from "./SearchBox";
+import { Link } from "react-router-dom";
+import { RouteSignup } from "../helpers/RouteName";
 
 const HeroSection = () => {
   return (
-    <div className=" flex flex-col pb-16">
-      <SearchBox />
+    <div className=" flex flex-col pb-16 sm: py-10">
+      {/* <SearchBox /> */}
 
-      <div className="flex flex-col justify-center items-center gap-6 sm:gap-8 px-4 sm:px-8">
+      <div className="flex flex-col justify-center items-center gap-6 sm:gap-8 px-4 sm:px-8 py-10">
         <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center max-w-xl md:max-w-2xl">
           Discover Stories That Matter
         </h1>
@@ -17,11 +19,11 @@ const HeroSection = () => {
         </p>
 
         <div className="w-full text-center">
-          <a href="#">
+          <Link to={RouteSignup}>
             <button className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-base sm:text-lg font-bold bg-[#0f766e] text-white rounded-full transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg hover:scale-105 cursor-pointer">
-              Explore Articles <span>→</span>
+              Join Now <span>→</span>
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

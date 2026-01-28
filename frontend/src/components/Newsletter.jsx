@@ -1,6 +1,12 @@
 import React from "react";
+import { showToast } from "../helpers/ShowToast";
 
 const Newsletter = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    showToast('success', "You are now subscribed to Newsletter")
+  }
+
   return (
     <section className="w-full py-16 px-4 sm:px-8 lg:px-16">
       <div className="text-center max-w-2xl mx-auto">
@@ -16,7 +22,7 @@ const Newsletter = () => {
 
       <div className="text-center py-12 sm:py-16">
         <form
-          action="#"
+        onSubmit={handleSubmit}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 max-w-xl mx-auto">
           <input
             type="email"
@@ -24,7 +30,9 @@ const Newsletter = () => {
             className="w-full sm:w-auto flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-full border-2 hover:border-[#f38b15] outline-none text-base sm:text-lg"
           />
           <a href="#" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-red-500 hover:bg-red-600 text-white text-base sm:text-xl font-bold cursor-pointer transition-transform hover:-translate-y-0.5 hover:shadow-lg outline-none">
+            <button
+              type="submit"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-red-500 hover:bg-red-600 text-white text-base sm:text-xl font-bold cursor-pointer transition-transform hover:-translate-y-0.5 hover:shadow-lg outline-none">
               Subscribe
             </button>
           </a>

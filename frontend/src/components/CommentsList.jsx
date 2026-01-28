@@ -14,7 +14,7 @@ const CommentsList = ({ props }) => {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* Header */}
       <h1 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">
-        Comments{" "}
+        Comments
         <span className="text-gray-500 text-lg">
           (
           {props.newComments
@@ -45,7 +45,7 @@ const CommentsList = ({ props }) => {
                   "Just now"}
               </p>
             </div>
-            <p className="text-gray-700 leading-relaxed break-words">
+            <p className="text-gray-700 leading-relaxed wrap-break-word">
               {props.newComments.comment}
             </p>
           </div>
