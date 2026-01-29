@@ -27,26 +27,18 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/comment", commentRoutes);
 
-let isConnected = false;
-async function connectToMongoDB() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    isConnected = true;
+// Connect to MongoDB on startup
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
     console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-  }
-}
-
-app.use(async (req, res, next) => {
-  if (!isConnected) {
-    await connectToMongoDB();
-  }
-  next();
-});
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error.message);
+  });
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
