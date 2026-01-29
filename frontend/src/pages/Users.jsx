@@ -15,8 +15,6 @@ const Users = () => {
     [freshdata],
   );
 
-//   console.log(data?.users)
-
   const handleDelete = async (id) => {
     const response = await deleteData(
       `${import.meta.env.VITE_API_URL}/user/delete/${id}`,

@@ -21,7 +21,11 @@ export default function DesktopUserProfile({ user }) {
       navigate(RouteIndex);
       showToast("success", response.data.message);
     } catch (error) {
-      console.error(error.response?.data?.error || error.message);
+      showToast(
+        "error",
+        error.response?.data?.message ||
+          "Something went wrong, Please try again.",
+      );
     }
   };
 

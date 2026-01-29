@@ -55,9 +55,7 @@ const Profile = () => {
           withCredentials: true,
         },
       );
-      // console.log(userData?.user._id) // to check userdata
       dispatch(setUser(response.data.user));
-      // console.log(response.data.user);
       showToast("success", response.data.message);
     } catch (error) {
       showToast(

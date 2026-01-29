@@ -24,8 +24,6 @@ async function updateUser(req, res, next) {
   try {
     const data = JSON.parse(req.body.data);
     const { userid } = req.params; // be careful while receiving the userid because if mismatch from the route it will undefined (see in the userRoutes url /:userid so use userid only and not userId)
-    // console.log(data);
-    // console.log(userid);
 
     const user = await User.findById(userid);
     user.fullName = data.fullName;
@@ -47,7 +45,6 @@ async function updateUser(req, res, next) {
 
         user.avatar = uploadResult.secure_url;
       } catch (error) {
-        console.error("Cloudinary upload error:", error);
         return next(handleError(500, error.message || "Internal Server Error"));
       }
     }

@@ -19,7 +19,6 @@ async function createBlog(req, res, next) {
 
         featuredImage = uploadResult.secure_url;
       } catch (error) {
-        console.error("Cloudinary upload error:", error);
         return next(handleError(500, error.message || "Internal Server Error"));
       }
     }
@@ -80,7 +79,6 @@ async function updateBlog(req, res, next) {
 
         featuredImage = uploadResult.secure_url;
       } catch (error) {
-        console.error("Cloudinary upload error:", error);
         return next(handleError(500, error.message || "Internal Server Error"));
       }
     }
@@ -158,14 +156,11 @@ export const getBlog = async (req, res, next) => {
 export const getRelatedBlog = async (req, res, next) => {
   try {
     const { categorySlug, blogSlug } = req.params;
-    // console.log("category slug: ", categorySlug);
     const categoryData = await Category.findOne({ slug: categorySlug });
-    // console.log("category data: ", categoryData);
     if (!categoryData) {
       return next(404, "Data not found");
     }
     const categoryId = categoryData._id;
-    // console.log("category id: ", categoryId);
 
     const relatedBlog = await Blog.find({
       category: categoryId,
@@ -244,4 +239,4 @@ export {
   deleteBlog,
   showAllBlog,
   getAllBlogs,
-}; // no need to add getRelatedBlog and getBlog cuz find out why
+};

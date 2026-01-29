@@ -19,14 +19,9 @@ const Signup = () => {
   const onSubmit = async (values) => {
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, values);
-      // console.log("Server response: ", response);
       showToast("success", "Account created successfully!");
       navigate("/signin");
     } catch (error) {
-      console.error(
-        "Error submitting form: ",
-        error.response?.data || error.message
-      );
       showToast(
         "error",
         error.response?.data?.message || "Signup failed. Please try again."

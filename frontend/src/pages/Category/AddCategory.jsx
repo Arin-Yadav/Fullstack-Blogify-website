@@ -15,7 +15,6 @@ const AddCategory = () => {
   } = useForm();
 
   const onSubmit = async (values) => {
-    console.log(values)
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/category/add`,

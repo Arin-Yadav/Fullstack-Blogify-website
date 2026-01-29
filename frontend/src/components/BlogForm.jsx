@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { showToast } from "../helpers/ShowToast";
 
 const BlogForm = ({ onBlogCreated }) => {
   const [title, setTitle] = useState("");
@@ -10,20 +11,28 @@ const BlogForm = ({ onBlogCreated }) => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/blogs`, {
-        title,
-        content,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/blogs`,
+        {
+          title,
+          content,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       setTitle("");
       setContent("");
-      onBlogCreated(res.data); // notify parent to refresh blog list // what is res.data
-    } catch (err) {
-      console.error("Blog creation failed:", err.response?.data?.error);
+      onBlogCreated(res.data);
+    } catch (error) {
+      showToast(
+        "error",
+        error.response?.data?.message ||
+          "Something went wrong, Please try again.",
+      );
     }
   };
 
@@ -45,7 +54,6 @@ const BlogForm = ({ onBlogCreated }) => {
       <button className="bg-green-600 text-white px-4 py-2 rounded">
         Publish Blog
       </button>
-      
     </form>
   );
 };

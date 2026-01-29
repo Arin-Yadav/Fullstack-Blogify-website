@@ -6,23 +6,10 @@ import { handleError } from "../helpers/handleError.js";
 async function handleSignUp(req, res, next) {
   try {
     const { fullName, email, password } = req.body;
-    // note = add a check to see if user already exists
     const checkUser = await User.findOne({ email });
     if (checkUser) {
-      //user already registered message = two ways to handle this
-      // 1.
-      // res.send({
-      //   message: "User already exists",
-      //   success: false,
-      //   statusCode : 409,
-      // })
-
-      // 2.
       return next(handleError(409, "User already registered"));
     }
-
-    // creating user
-    // hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
@@ -36,7 +23,6 @@ async function handleSignUp(req, res, next) {
     });
   } catch (err) {
     next(handleError(500, err.message || "Signup failed"));
-    // console.log(err)
   }
 }
 
@@ -59,13 +45,11 @@ async function handleSignIn(req, res, next) {
   try {
     const user = await User.findOne({ email });
     if (!user)
-      // return res.status(404).json({ error: "Invalid login credentials" });
       return next(handleError(404, "Invalid login credentials"));
 
     const hashedPassword = user.password;
     const matchUser = await bcrypt.compare(password, hashedPassword);
     if (!matchUser)
-      // return res.status(401).json({ error: "Invalid login credentials" });
       return next(handleError(404, "Invalid login credentials"));
 
     const token = jwt.sign(
@@ -91,7 +75,6 @@ async function handleSignIn(req, res, next) {
     res.status(200).json({
       success: true,
       message: "Login successful",
-      // token,
       user: newUser,
     });
   } catch (err) {

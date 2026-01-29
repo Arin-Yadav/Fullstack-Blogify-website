@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { RouteBlogDetails } from "../helpers/RouteName";
 
 const RelatedBlog = ({ props }) => {
-  // console.log(props)
   const { data } = useFetch(
     `${import.meta.env.VITE_API_URL}/blog/get-related-blog/${props.category}/${props.blogSlug}`,
     { withCredentials: true },
