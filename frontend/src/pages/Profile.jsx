@@ -173,7 +173,7 @@ const Profile = () => {
           <div className="col-span-1 sm:col-span-2">
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
               Save Changes
             </button>
           </div>

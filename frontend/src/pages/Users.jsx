@@ -71,7 +71,18 @@ const Users = () => {
                     {user.email}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-800">
-                    <img src={user.avatar} alt="user-avatar" className="w-10 rounded-full object-contain" />
+                    {/* <img src={user.avatar} alt="user-avatar" className="w-10 rounded-full object-contain" /> */}
+                    {user.avatar ? (
+                      <img
+                        src={user?.avatar}
+                        alt={user?.fullName}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-[20px] font-bold text-green-600">
+                        {user?.fullName.charAt(0)}
+                      </div>
+                    )}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-800">
                     {dayjs(user.createAt).format("DD-MM-YYYY")}

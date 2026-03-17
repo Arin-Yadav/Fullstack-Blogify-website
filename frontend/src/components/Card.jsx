@@ -5,8 +5,8 @@ import { RouteBlogDetails } from "../helpers/RouteName";
 
 const Card = ({ blog }) => {
   return (
-    <Link to={RouteBlogDetails(blog.category.slug, blog.slug)}>
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer flex flex-col">
+    <Link to={RouteBlogDetails(blog?.category?.slug, blog?.slug)}>
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer flex flex-col h-full">
         {/* Featured Image */}
         <img
           src={blog.featuredImage}
@@ -26,32 +26,29 @@ const Card = ({ blog }) => {
           {/* Title */}
           <div className="space-y-2 mb-4">
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 line-clamp-2">
-              {blog.title}
+              {blog?.title}
             </h2>
-            {/* <p className="text-sm text-gray-700 line-clamp-3">
-            {blog.blogcontent}
-          </p> */}
           </div>
 
           {/* Author + Date pinned at bottom */}
           <div className="flex justify-between items-center text-xs text-gray-500 mt-auto">
             <div className="flex items-center gap-2">
-              {blog.author?.avatar ? (
+              {blog?.author?.avatar ? (
                 <img
-                  src={blog.author.avatar}
-                  alt={blog.author.name}
-                  className="w-20 h-10 rounded-full object-cover"
+                  src={blog?.author?.avatar}
+                  alt={blog?.author?.fullName}
+                  className="w-10 h-10 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-[10px] font-bold text-gray-700">
-                  {blog.author?.name?.charAt(0)}
+                <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-[20px] font-bold text-green-600">
+                  {blog?.author?.fullName.charAt(0)}
                 </div>
               )}
-              <span className="font-medium">{blog.author?.name}</span>
+              <span className="font-medium">{blog?.author?.fullName}</span>
             </div>
             <span className="flex items-center gap-1">
               <IoCalendarNumberOutline />
-              {dayjs(blog.date).format("DD-MMM-YYYY")}
+              {dayjs(blog?.date).format("DD-MMM-YYYY")}
             </span>
           </div>
         </div>

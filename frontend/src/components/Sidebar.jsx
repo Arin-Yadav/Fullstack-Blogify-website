@@ -8,7 +8,6 @@ import {
   RouteCategoryDetails,
   RouteComments,
   RouteIndex,
-  RouteProfile,
   RouteUsers,
 } from "../helpers/RouteName";
 import { GrBlog } from "react-icons/gr";
@@ -48,6 +47,8 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
     }
   };
 
+  const handleCloseSidebar = () => setIsSidebarOpen(false);
+
   return (
     <>
       {/* Sidebar */}
@@ -57,6 +58,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           <Link
             to={RouteIndex}
+            onClick={handleCloseSidebar}
             className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
             <IoHomeOutline className="mr-2" /> Home
           </Link>
@@ -65,11 +67,13 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
             <>
               <Link
                 to={RouteBlog}
+                onClick={handleCloseSidebar}
                 className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
                 <GrBlog className="mr-2" /> Blog
               </Link>
               <Link
                 to={RouteComments}
+                onClick={handleCloseSidebar}
                 className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
                 <FaRegComments className="mr-2" /> Comments
               </Link>
@@ -78,16 +82,18 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
             <></>
           )}
 
-          {user && user.isLoggedIn && user.user.role === "admin" ? (
+          {user && user?.isLoggedIn && user?.user?.role === "admin" ? (
             <>
               <Link
                 to={RouteCategoryDetails}
+                onClick={handleCloseSidebar}
                 className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
                 <BiCategory className="mr-2" /> Category
               </Link>
 
               <Link
                 to={RouteUsers}
+                onClick={handleCloseSidebar}
                 className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
                 <LuUsers className="mr-2" /> Users
               </Link>
@@ -107,6 +113,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
                   <Link
                     key={category._id}
                     to={RouteBlogByCategory(category.slug)}
+                    onClick={handleCloseSidebar}
                     className="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-[#0f766e]">
                     <span className="flex items-center gap-2">
                       <FaRegCircle className="h-2 w-2" /> {category.name}

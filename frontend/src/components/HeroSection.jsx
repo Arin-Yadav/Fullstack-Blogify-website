@@ -1,32 +1,46 @@
-import React from "react";
-import SearchBox from "./SearchBox";
 import { Link } from "react-router-dom";
-import { RouteSignup } from "../helpers/RouteName";
+import { useSelector } from "react-redux";
+import { RouteAddBlog } from "../helpers/RouteName";
 
 const HeroSection = () => {
+  const user = useSelector((state) => state.user);
+
   return (
-    <div className=" flex flex-col pb-16 sm: py-10">
-      {/* <SearchBox /> */}
-
-      <div className="flex flex-col justify-center items-center gap-6 sm:gap-8 px-4 sm:px-8 py-10">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center max-w-xl md:max-w-2xl">
-          Discover Stories That Matter
-        </h1>
-
-        <p className="text-base sm:text-lg md:text-xl text-center opacity-90 max-w-lg md:max-w-2xl">
-          Join our community of writers and readers sharing insights,
-          experiences, and knowledge across diverse topics.
-        </p>
-
-        <div className="w-full text-center">
-          <Link to={RouteSignup}>
-            <button className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-base sm:text-lg font-bold bg-[#0f766e] text-white rounded-full transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg hover:scale-105 cursor-pointer">
-              Join Now <span>→</span>
+    <section className="flex flex-col items-center justify-center text-center px-6 sm:px-10 md:px-16 py-16">
+      {!user?.isLoggedIn ? (
+        <>
+          {/* Guest Hero */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight max-w-3xl">
+            Discover Stories That Matter
+          </h1>
+          <p className="mt-4 text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl">
+            Join our community of writers and readers sharing insights,
+            experiences, and knowledge across diverse topics.
+          </p>
+          <Link to="/signup" className="mt-8">
+            <button className="px-8 py-3 text-lg font-semibold cursor-pointer bg-[#0f766e] text-white rounded-full shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:scale-105">
+              Join Now →
             </button>
           </Link>
-        </div>
-      </div>
-    </div>
+        </>
+      ) : (
+        <>
+          {/* Logged-In Hero */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight max-w-3xl">
+            Welcome back, {user?.user?.fullName || "Writer"} 👋
+          </h1>
+          <p className="mt-4 text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl">
+            Ready to share your thoughts today? Start writing or explore what
+            others are talking about.
+          </p>
+          <Link to={RouteAddBlog} className="mt-8">
+            <button className="px-8 py-3 text-lg font-semibold cursor-pointer bg-blue-600 text-white rounded-full shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:scale-105">
+              Create a Blog →
+            </button>
+          </Link>
+        </>
+      )}
+    </section>
   );
 };
 

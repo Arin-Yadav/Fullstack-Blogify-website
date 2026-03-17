@@ -34,12 +34,12 @@ export default function DesktopUserProfile({ user }) {
       <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
         {/* Profile Menu */}
         <Menu>
-          <MenuButton className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full focus:outline-none ring-1 ring-green-600 transition">
+          <MenuButton className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full focus:outline-none ring-1 ring-green-600 transition cursor-pointer">
             {user?.avatar ? (
               <img
                 src={user.avatar}
                 alt="avatar"
-                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover cursor-pointer"
               />
             ) : (
               <FaUserCircle className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-gray-600" />
@@ -88,7 +88,7 @@ export default function DesktopUserProfile({ user }) {
                     onClick={handleSignout}
                     className="block w-full text-sm font-medium 
                          bg-red-600 hover:bg-red-700 text-white 
-                         px-4 py-2 rounded-md transition">
+                         px-4 py-2 rounded-md transition cursor-pointer">
                     Logout
                   </button>
                 ) : (
@@ -96,7 +96,7 @@ export default function DesktopUserProfile({ user }) {
                     to="/signin"
                     className="block w-full text-center font-semibold 
                          bg-teal-600 hover:bg-teal-700 text-white 
-                         px-5 py-2 rounded-md transition">
+                         px-5 py-2 rounded-md transition cursor-pointer">
                     Sign in
                   </Link>
                 )}

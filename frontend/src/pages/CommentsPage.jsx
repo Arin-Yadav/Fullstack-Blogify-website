@@ -55,25 +55,25 @@ const CommentsPage = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data && data.comments.length > 0 ? (
+            {data && data?.comments?.length > 0 ? (
               data?.comments?.map((comment) => (
-                <tr key={comment._id} className="hover:bg-gray-50">
+                <tr key={comment?._id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm text-gray-800">
-                    {comment.blogid.title}
+                    {comment?.blogid?.title}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-800">
-                    {comment.author.fullName}
+                    {comment?.author?.fullName}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-800">
-                    {dayjs(comment.createAt).format("DD-MM-YYYY")}
+                    {dayjs(comment?.createAt).format("DD-MM-YYYY")}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-800">
-                    {comment.comment}
+                    {comment?.comment}
                   </td>
                   <td className="px-4 py-2">
                     <div className="flex gap-2">
                       <button
-                        onClick={() => handleDelete(comment._id)}
+                        onClick={() => handleDelete(comment?._id)}
                         className="px-3 py-1 text-sm text-red-600 border border-red-200 rounded hover:bg-red-50">
                         Delete
                       </button>

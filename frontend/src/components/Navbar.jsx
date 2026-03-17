@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RxHamburgerMenu } from "react-icons/rx";
 import SearchBox from "./SearchBox";
 import { CiSearch } from "react-icons/ci";
+import blog_logo from "../assets/blog_logo.webp";
+import { RouteIndex } from "../helpers/RouteName";
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [showSearch, setShowSearch] = useState(false);
@@ -24,9 +26,14 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         {isSidebarOpen ? <IoCloseSharp /> : <RxHamburgerMenu />}
       </button>
       {/* Logo */}
-      <div className="cursor-pointer pl-3">
-        <h1 className="text-2xl">✍️</h1>
-      </div>
+      <Link to={RouteIndex} className="flex items-center">
+        <img
+          src={blog_logo}
+          alt="Blogify Logo"
+          className="h-12 w-auto object-contain"
+        />
+        <span className="text-xl font-bold text-gray-800">Blogify</span>
+      </Link>
 
       <div className="w-[500px]">
         <div
@@ -45,12 +52,12 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <CiSearch size={20} className="text-gray-700" />
         </button>
         <ul className="sm:flex items-center gap-4 sm:gap-6">
-          {!user.isLoggedIn ? (
+          {!user?.isLoggedIn ? (
             <button className="body-font md:w-30 md:text-lg py-2 rounded-full text-sm w-20 cursor-pointer bg-[#0f766e] hover:bg-[#0c615a] text-white transition-transform hover:scale-105">
               <Link to="/signin">Sign in</Link>
             </button>
           ) : (
-            <DesktopUserProfile user={user.user} />
+            <DesktopUserProfile user={user?.user} />
           )}
         </ul>
       </div>
